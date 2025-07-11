@@ -163,7 +163,7 @@
     margin-top: 8px;
     height: 250px;
     overflow: hidden;
-    opacity: 0.4;
+    opacity: 0.6;
     pointer-events: none;
     z-index: 0;
     clip-path: inset(50% 0 0 0);
@@ -175,22 +175,22 @@
 
   /* Ajustement du reflet selon la position */
   .coverflow-page.center .page-reflection {
-    opacity: 0.8;
+    opacity: 0.9;
   }
 
   .coverflow-page.right-1 .page-reflection,
   .coverflow-page.left-1 .page-reflection {
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
   .coverflow-page.right-2 .page-reflection,
   .coverflow-page.left-2 .page-reflection {
-    opacity: 0.6;
+    opacity: 0.7;
   }
 
   .coverflow-page.right-3 .page-reflection,
   .coverflow-page.left-3 .page-reflection {
-    opacity: 0.5;
+    opacity: 0.6;
   }
 
   /* Page actuelle - centre */
@@ -203,38 +203,38 @@
   /* Pages à droite */
   .coverflow-page.right-1 {
     z-index: 49;
-    transform: translateX(280px) translateZ(-50px) rotateY(-45deg) scale(0.85);
+    transform: translateX(320px) translateZ(-50px) rotateY(-45deg) scale(0.85);
     opacity: 1;
   }
 
   .coverflow-page.right-2 {
     z-index: 48;
-    transform: translateX(450px) translateZ(-100px) rotateY(-60deg) scale(0.7);
+    transform: translateX(490px) translateZ(-100px) rotateY(-60deg) scale(0.7);
     opacity: 1;
   }
 
   .coverflow-page.right-3 {
     z-index: 47;
-    transform: translateX(580px) translateZ(-150px) rotateY(-70deg) scale(0.55);
+    transform: translateX(620px) translateZ(-150px) rotateY(-70deg) scale(0.55);
     opacity: 1;
   }
 
   /* Pages à gauche */
   .coverflow-page.left-1 {
     z-index: 49;
-    transform: translateX(-280px) translateZ(-50px) rotateY(45deg) scale(0.85);
+    transform: translateX(-320px) translateZ(-50px) rotateY(45deg) scale(0.85);
     opacity: 1;
   }
 
   .coverflow-page.left-2 {
     z-index: 48;
-    transform: translateX(-450px) translateZ(-100px) rotateY(60deg) scale(0.7);
+    transform: translateX(-490px) translateZ(-100px) rotateY(60deg) scale(0.7);
     opacity: 1;
   }
 
   .coverflow-page.left-3 {
     z-index: 47;
-    transform: translateX(-580px) translateZ(-150px) rotateY(70deg) scale(0.55);
+    transform: translateX(-620px) translateZ(-150px) rotateY(70deg) scale(0.55);
     opacity: 1;
   }
 
@@ -254,11 +254,11 @@
   }
 
   .coverflow-page.right-1:hover {
-    transform: translateX(280px) translateZ(-30px) rotateY(-40deg) scale(0.88);
+    transform: translateX(320px) translateZ(-30px) rotateY(-40deg) scale(0.88);
   }
 
   .coverflow-page.left-1:hover {
-    transform: translateX(-280px) translateZ(-30px) rotateY(40deg) scale(0.88);
+    transform: translateX(-320px) translateZ(-30px) rotateY(40deg) scale(0.88);
   }
 
   /* Animation de rotation plus fluide */
