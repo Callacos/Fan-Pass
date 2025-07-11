@@ -227,19 +227,22 @@ function App() {
                       isCurrentPage={pageIndex === currentPage}
                     />
                     <div className="page-reflection">
-                      <PassportPage
-                        pageNumber={pageIndex + 1}
-                        stamps={generateStampsForPage(pageIndex + 1)}
-                        onAddStamp={() => {}}
-                        isCurrentPage={false}
-                      />
-                    </div>
+  <PassportPage
+    pageNumber={pageIndex + 1}
+    stamps={generateStampsForPage(pageIndex + 1)}
+    onAddStamp={() => {}}
+    isCurrentPage={false}
+  />
+</div>
                   </div>
                 </div>
               ))}
             </div>
+
           </div>
         </div>
+        <div className="reflection-fade-mask"></div>
+
 
         {/* Pop-up pour nouveau tampon */}
         {showStampPopup && newStampData && (

@@ -14,6 +14,7 @@
   .passport-page {
     transform-style: preserve-3d;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    
   }
 
   .passport-page.flipping {
@@ -76,6 +77,23 @@
   .page-turn-animation {
     animation: pageTurn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  .reflection-fade-mask {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  pointer-events: none;
+  z-index: 46;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 25%,
+    rgba(0, 0, 0, 0) 75%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
 
   @keyframes pageTurn {
     0% {
@@ -158,39 +176,42 @@
 
   /* Vrai reflet avec contenu de la page */
   .page-reflection {
-    position: relative;
     transform: scaleY(-1);
-    margin-top: 8px;
-    height: 250px;
-    overflow: hidden;
-    opacity: 0.6;
+    filter: blur(2px);
+    margin-top: 20px;
     pointer-events: none;
-    z-index: 0;
-    clip-path: inset(50% 0 0 0);
-    /* Temporairement désactivé pour test */
-    /* mask: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 40%, transparent 100%);
-    -webkit-mask: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 40%, transparent 100%); */
-    filter: blur(1px) brightness(0.8);
+    position: relative;
+    background: rgba(0, 0, 0, 0.02);
+    mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
+    -webkit-mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
   }
+  .coverflow-page:not(.center) .page-reflection {
+    display: none;
+  }
+
 
   /* Ajustement du reflet selon la position */
   .coverflow-page.center .page-reflection {
     opacity: 0.9;
+    z-index: 50;
   }
 
   .coverflow-page.right-1 .page-reflection,
   .coverflow-page.left-1 .page-reflection {
-    opacity: 0.8;
+    opacity: 0.4;
+    z-index: 49;
   }
 
   .coverflow-page.right-2 .page-reflection,
   .coverflow-page.left-2 .page-reflection {
-    opacity: 0.7;
+    opacity: 0.4;
+    z-index: 48;
   }
 
   .coverflow-page.right-3 .page-reflection,
   .coverflow-page.left-3 .page-reflection {
     opacity: 0.6;
+    z-index: 47;
   }
 
   /* Page actuelle - centre */
