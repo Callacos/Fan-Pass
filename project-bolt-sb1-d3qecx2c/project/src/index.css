@@ -135,7 +135,7 @@
 
   .coverflow-page {
     position: absolute;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform-style: preserve-3d;
     transform-origin: center center;
     will-change: transform, opacity;
@@ -189,7 +189,7 @@
 
   /* Animation de transition améliorée */
   .coverflow-page.transitioning {
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Effet de survol amélioré */
@@ -230,5 +230,77 @@
   /* Prévention des bugs de rendu */
   .coverflow-page * {
     transform-style: preserve-3d;
+  }
+
+  .menu-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .menu-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  }
+
+  .menu-button:active {
+    transform: scale(0.98);
+  }
+
+  .page-click-zone {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    z-index: 10;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  .page-click-zone:hover {
+    opacity: 0;
+  }
+
+  .page-click-zone.left {
+    left: 0;
+    background: transparent;
+  }
+
+  .page-click-zone.right {
+    right: 0;
+    background: transparent;
+  }
+
+  .page-click-zone::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    opacity: 0;
+    display: none;
+  }
+
+  .page-click-zone.left::before {
+    display: none;
+  }
+
+  .page-click-zone.right::before {
+    display: none;
   }
 }

@@ -10,10 +10,10 @@ export const usePassportAnimation = () => {
     setIsAnimating(true);
     setAnimationDirection(direction);
     
-    // Animation plus courte et plus fluide
+    // Animation fluide et réactive
     setTimeout(() => {
       setIsAnimating(false);
-    }, 600);
+    }, 800);
   }, [isAnimating]);
 
   return {

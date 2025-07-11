@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PassportCover from './components/PassportCover';
 import PassportPage from './components/PassportPage';
-import PassportNavigation from './components/PassportNavigation';
 import { usePassportAnimation } from './hooks/usePassportAnimation';
 
 interface Stamp {
@@ -16,7 +15,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageStamps, setPageStamps] = useState<Record<number, Stamp[]>>({});
-  const { isAnimating, animationDirection, startAnimation } = usePassportAnimation();
+  const { isAnimating, startAnimation } = usePassportAnimation();
   
   const totalPages = 8;
 
@@ -29,7 +28,7 @@ function App() {
       startAnimation('backward');
       setTimeout(() => {
         setCurrentPage(currentPage - 1);
-      }, 250);
+      }, 100);
     }
   };
 
@@ -38,12 +37,12 @@ function App() {
       startAnimation('forward');
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
-      }, 250);
+      }, 100);
     }
   };
 
   const handleAddStamp = (slotIndex: number, stamp: Stamp) => {
-    setPageStamps(prev => ({
+    setPageStamps((prev: Record<number, Stamp[]>) => ({
       ...prev,
       [currentPage]: {
         ...prev[currentPage],
@@ -58,14 +57,6 @@ function App() {
     setPageStamps({});
   };
 
-  const getCurrentPageStamps = () => {
-    return pageStamps[currentPage] || {};
-  };
-
-  const getPageStampsArray = () => {
-    const stamps = getCurrentPageStamps();
-    return [stamps[0], stamps[1], stamps[2]];
-  };
 
   const getCoverFlowClass = (pageIndex: number) => {
     const diff = pageIndex - currentPage;
@@ -111,6 +102,16 @@ function App() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-8">
+      {/* Bouton Menu en haut à gauche */}
+      {isOpen && (
+        <button
+          onClick={handleReset}
+          className="menu-button"
+        >
+          Menu
+        </button>
+      )}
+      
       <div className="flex flex-col items-center">
         <div className="relative">
           {!isOpen && (
@@ -118,7 +119,6 @@ function App() {
               <PassportCover isOpen={isOpen} onOpen={handleOpenPassport} />
             </div>
           )}
-          
           {isOpen && (
             <div className="relative perspective-1000">
               <div className="coverflow-container">
@@ -134,6 +134,9 @@ function App() {
                         []
                       }
                       onAddStamp={pageIndex === currentPage ? handleAddStamp : () => {}}
+                      onPrevious={handlePreviousPage}
+                      onNext={handleNextPage}
+                      isCurrentPage={pageIndex === currentPage}
                     />
                   </div>
                 ))}
@@ -141,19 +144,6 @@ function App() {
             </div>
           )}
         </div>
-        
-        {isOpen && (
-          <div className="fade-in">
-            <PassportNavigation
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPrevious={handlePreviousPage}
-              onNext={handleNextPage}
-              onReset={handleReset}
-              isAnimating={isAnimating}
-            />
-          </div>
-        )}
         
         {!isOpen && (
           <div className="mt-8 text-center slide-in">

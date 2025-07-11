@@ -13,9 +13,19 @@ interface PassportPageProps {
   pageNumber: number;
   stamps: Stamp[];
   onAddStamp: (slotIndex: number, stamp: Stamp) => void;
+  onPrevious?: () => void;
+  onNext?: () => void;
+  isCurrentPage?: boolean;
 }
 
-const PassportPage: React.FC<PassportPageProps> = ({ pageNumber, stamps, onAddStamp }) => {
+const PassportPage: React.FC<PassportPageProps> = ({ 
+  pageNumber, 
+  stamps, 
+  onAddStamp, 
+  onPrevious, 
+  onNext, 
+  isCurrentPage = false 
+}) => {
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
 
   const stampTemplates = [
@@ -47,6 +57,24 @@ const PassportPage: React.FC<PassportPageProps> = ({ pageNumber, stamps, onAddSt
 
   return (
     <div className="bg-white w-80 h-96 rounded-lg shadow-xl border border-gray-200 relative overflow-hidden">
+      {/* Zone de clic gauche (page précédente) */}
+      {isCurrentPage && onPrevious && (
+        <div 
+          className="page-click-zone left"
+          onClick={onPrevious}
+          title="Page précédente"
+        />
+      )}
+      
+      {/* Zone de clic droite (page suivante) */}
+      {isCurrentPage && onNext && (
+        <div 
+          className="page-click-zone right"
+          onClick={onNext}
+          title="Page suivante"
+        />
+      )}
+      
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 to-red-600" />
       
       <div className="p-6 h-full">

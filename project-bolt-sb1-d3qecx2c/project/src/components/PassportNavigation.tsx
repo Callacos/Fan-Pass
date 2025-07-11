@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PassportNavigationProps {
   currentPage: number;
@@ -40,14 +40,6 @@ const PassportNavigation: React.FC<PassportNavigationProps> = ({
             />
           ))}
         </div>
-        
-        <button
-          onClick={onReset}
-          className="ml-4 p-2 bg-white text-gray-600 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:bg-gray-50"
-          title="Réinitialiser"
-        >
-          <RotateCcw className="w-5 h-5" />
-        </button>
       </div>
       
       <button
