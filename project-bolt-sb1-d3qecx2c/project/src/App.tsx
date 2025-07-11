@@ -127,17 +127,31 @@ function App() {
                     key={`page-${pageIndex}`}
                     className={`coverflow-page ${getCoverFlowClass(pageIndex)} ${isAnimating ? 'transitioning' : ''}`}
                   >
-                    <PassportPage
-                      pageNumber={pageIndex + 1}
-                      stamps={pageStamps[pageIndex] ? 
-                        [pageStamps[pageIndex][0], pageStamps[pageIndex][1], pageStamps[pageIndex][2]] : 
-                        []
-                      }
-                      onAddStamp={pageIndex === currentPage ? handleAddStamp : () => {}}
-                      onPrevious={handlePreviousPage}
-                      onNext={handleNextPage}
-                      isCurrentPage={pageIndex === currentPage}
-                    />
+                    <div className="page-with-reflection">
+                      <PassportPage
+                        pageNumber={pageIndex + 1}
+                        stamps={pageStamps[pageIndex] ? 
+                          [pageStamps[pageIndex][0], pageStamps[pageIndex][1], pageStamps[pageIndex][2]] : 
+                          []
+                        }
+                        onAddStamp={pageIndex === currentPage ? handleAddStamp : () => {}}
+                        onPrevious={handlePreviousPage}
+                        onNext={handleNextPage}
+                        isCurrentPage={pageIndex === currentPage}
+                      />
+                      {/* Vrai reflet avec contenu de la page */}
+                      <div className="page-reflection">
+                        <PassportPage
+                          pageNumber={pageIndex + 1}
+                          stamps={pageStamps[pageIndex] ? 
+                            [pageStamps[pageIndex][0], pageStamps[pageIndex][1], pageStamps[pageIndex][2]] : 
+                            []
+                          }
+                          onAddStamp={() => {}}
+                          isCurrentPage={false}
+                        />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
