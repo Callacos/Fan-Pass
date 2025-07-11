@@ -1,0 +1,116 @@
+{
+  "quests": [
+    {
+      "id": "classico_20_03_26",
+      "title": "Assister au Classico du 20/03/26",
+      "description": "Prendre une photo de votre ticket pour le match Real Madrid vs FC Barcelone",
+      "completed": false,
+      "proofImage": null,
+      "stampImage": "/stamps/spain.png",
+      "stampData": {
+        "country": "ESPAGNE",
+        "date": "20/03/26",
+        "type": "FOOTBALL",
+        "color": "text-red-600"
+      }
+    },
+    {
+      "id": "champions_league_final",
+      "title": "Finale de Champions League 2026",
+      "description": "Prendre une photo de votre ticket pour la finale de la Champions League",
+      "completed": false,
+      "proofImage": null,
+      "stampImage": "/stamps/england.png",
+      "stampData": {
+        "country": "ANGLETERRE",
+        "date": "28/05/26",
+        "type": "CHAMPIONS",
+        "color": "text-blue-600"
+      }
+    },
+    {
+      "id": "psg_marseille_derby",
+      "title": "Le Classique PSG vs Marseille",
+      "description": "Prendre une photo de votre ticket pour le derby français",
+      "completed": false,
+      "proofImage": null,
+      "stampImage": "/stamps/france.png",
+      "stampData": {
+        "country": "FRANCE",
+        "date": "15/04/26",
+        "type": "DERBY",
+        "color": "text-blue-600"
+      }
+    },
+    {
+      "id": "bundesliga_bayern_dortmund",
+      "title": "Der Klassiker Bayern vs Dortmund",
+      "description": "Prendre une photo de votre ticket pour le match le plus attendu d'Allemagne",
+      "completed": false,
+      "proofImage": null,
+      "stampImage": "/stamps/germany.png",
+      "stampData": {
+        "country": "ALLEMAGNE",
+        "date": "10/05/26",
+        "type": "KLASSIKER",
+        "color": "text-orange-600"
+      }
+    },
+    {
+      "id": "serie_a_inter_milan",
+      "title": "Derby della Madonnina",
+      "description": "Prendre une photo de votre ticket pour le derby de Milan",
+      "completed": false,
+      "proofImage": null,
+      "stampImage": "/stamps/italy.png",
+      "stampData": {
+        "country": "ITALIE",
+        "date": "22/03/26",
+        "type": "DERBY",
+        "color": "text-green-600"
+      }
+    },
+    {
+      "id": "premier_league_arsenal_tottenham",
+      "title": "North London Derby",
+      "description": "Prendre une photo de votre ticket pour Arsenal vs Tottenham",
+      "completed": false,
+      "proofImage": null,
+      "stampImage": "/stamps/england.png",
+      "stampData": {
+        "country": "ANGLETERRE",
+        "date": "18/04/26",
+        "type": "DERBY",
+        "color": "text-red-600"
+      }
+    },
+    {
+      "id": "copa_america_final",
+      "title": "Finale Copa America 2026",
+      "description": "Prendre une photo de votre ticket pour la finale de la Copa America",
+      "completed": false,
+      "proofImage": null,
+      "stampImage": "/stamps/brazil.png",
+      "stampData": {
+        "country": "BRÉSIL",
+        "date": "14/07/26",
+        "type": "FINALE",
+        "color": "text-yellow-600"
+      }
+    },
+    {
+      "id": "world_cup_qualifier",
+      "title": "Qualifications Coupe du Monde",
+      "description": "Prendre une photo de votre ticket pour un match de qualification",
+      "completed": false,
+      "proofImage": null,
+      "stampImage": "/stamps/portugal.png",
+      "stampData": {
+        "country": "PORTUGAL",
+        "date": "12/06/26",
+        "type": "QUALIFS",
+        "color": "text-green-600"
+      }
+    }
+  ]
+}
