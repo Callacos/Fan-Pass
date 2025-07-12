@@ -270,24 +270,27 @@ function App() {
     if (!isConnected) {
       return (
         <div className="min-h-screen flex flex-col items-center justify-center p-8">
-          <div className="absolute top-8 left-8 right-8 flex justify-between items-center z-10">
-            <MagnetButton
-              onClick={handleOpenQuests}
-              className="menu-button"
-              strength={0.4}
-              distance={120}
-            >
-              Quêtes
-            </MagnetButton>
-            <div className="mt-4">
-              <MagnetButton
-                onClick={handleBackToMenu}
-                className="menu-button"
-                strength={0.4}
-                distance={120}
-              >
-                Menu
-              </MagnetButton>
+          <div className="absolute top-8 left-8 right-8 z-10">
+            <div className="flex justify-between items-start">
+              <div className="flex flex-col gap-8">
+                <MagnetButton
+                  onClick={handleOpenQuests}
+                  className="menu-button"
+                  strength={0.25}
+                  distance={100}
+                >
+                  Quêtes
+                </MagnetButton>
+                <MagnetButton
+                  onClick={handleBackToMenu}
+                  className="menu-button"
+                  strength={0.25}
+                  distance={100}
+                >
+                  Menu
+                </MagnetButton>
+              </div>
+              <div></div>
             </div>
           </div>
           <div className="flex flex-col items-center">
@@ -311,24 +314,27 @@ function App() {
     // Si connecté, afficher les pages du passeport
     return (
       <div className="min-h-screen flex items-center justify-center p-8">
-        <div className="absolute top-8 left-8 right-8 flex justify-between items-center z-10">
-          <MagnetButton
-            onClick={handleOpenQuests}
-            className="menu-button"
-            strength={0.4}
-            distance={120}
-          >
-            Quêtes
-          </MagnetButton>
-          <div className="mt-4">
-            <MagnetButton
-              onClick={handleBackToMenu}
-              className="menu-button"
-              strength={0.4}
-              distance={120}
-            >
-              Menu
-            </MagnetButton>
+        <div className="absolute top-8 left-8 right-8 z-10">
+          <div className="flex justify-between items-start">
+            <div className="flex flex-col gap-8">
+              <MagnetButton
+                onClick={handleOpenQuests}
+                className="menu-button"
+                strength={0.25}
+                distance={100}
+              >
+                Quêtes
+              </MagnetButton>
+              <MagnetButton
+                onClick={handleBackToMenu}
+                className="menu-button"
+                strength={0.25}
+                distance={100}
+              >
+                Menu
+              </MagnetButton>
+            </div>
+            <div></div>
           </div>
         </div>
         <div className="flex flex-col items-center">

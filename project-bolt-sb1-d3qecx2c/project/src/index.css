@@ -299,7 +299,7 @@
   }
 
   .menu-button {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    border-color: linear-gradient(135deg, #1f2bd6 0%, #01e420 100%);
     color: white;
     border: none;
     padding: 12px 24px;
@@ -307,7 +307,7 @@
     font-weight: 600;
     font-size: 16px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    box-shadow: 0 4px 15px rgb(211, 29, 16);
     transition: all 0.3s ease;
     z-index: 1000;
   }
