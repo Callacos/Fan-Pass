@@ -5,7 +5,7 @@ import PassportPage from './components/PassportPage';
 import Challenges from './components/challenges';
 import PhotoUpload from './components/PhotoUpload';
 import StampPopup from './components/StampPopup';
-import ParticlesBackground from './components/background';
+import ParticlesBackground from './components/ParticlesBackground';
 import MagnetButton from './components/MagnetButton';
 import { usePassportAnimation } from './hooks/usePassportAnimation';
 import { useQuests } from './hooks/useQuests';
@@ -244,8 +244,9 @@ function App() {
   if (view === 'quests') {
     if (!isConnected) {
       return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-8">
-          <div className="flex flex-col items-center">
+        <div className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden">
+          <ParticlesBackground />
+          <div className="flex flex-col items-center relative z-10">
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connectez votre wallet MetaMask</h2>
               <p className="text-white mb-4">Vous devez connecter votre wallet pour accéder aux quests.</p>
@@ -274,7 +275,8 @@ function App() {
     // Si l'utilisateur n'est pas connecté, afficher le bouton de connexion MetaMask
     if (!isConnected) {
       return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-8">
+        <div className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden">
+          <ParticlesBackground />
           <div className="absolute top-8 left-8 right-8 z-10">
             <div className="flex justify-between items-start">
               <div className="flex flex-col gap-8">
@@ -298,7 +300,7 @@ function App() {
               <div></div>
             </div>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center relative z-10">
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connectez votre wallet MetaMask</h2>
               <p className="text-white mb-4">Vous devez connecter votre wallet pour accéder à votre passeport de voyage.</p>
@@ -396,8 +398,9 @@ function App() {
   // Vue par défaut : Menu principal avec couverture et quests
   if (!isConnected) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-8">
-        <div className="flex flex-col items-center">
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden">
+        <ParticlesBackground />
+        <div className="flex flex-col items-center relative z-10">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connectez votre wallet MetaMask</h2>
             <p className="text-white mb-4">Vous devez connecter votre wallet pour accéder aux quests.</p>
