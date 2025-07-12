@@ -8,6 +8,7 @@ import StampPopup from './components/StampPopup';
 import ParticlesBackground from './components/background';
 import { usePassportAnimation } from './hooks/usePassportAnimation';
 import { useQuests } from './hooks/useQuests';
+import ShinyText from './components/ShinyText';
 
 interface Stamp {
   id: string;
@@ -289,7 +290,14 @@ function App() {
       <ParticlesBackground />
       
       <div className="flex flex-col items-center" style={{ zIndex: 5 }}>
-        <div className="relative mb-8">
+        {/* Titre au-dessus du passeport */}
+        <div className="text-center mb-6 slide-in">
+          <ShinyText text="TITRE" disabled={false} speed={3} className="mb-2" />
+          <p className="text-white drop-shadow-lg ultimate-fan-text">The ultimate fan experience</p>
+          
+        </div>
+        
+        <div className="relative mb-12 my-12">
           <div className="slide-in">
             {/* Afficher le passeport selon l'état de connexion */}
             {isConnected ? (

@@ -9,13 +9,14 @@ interface PassportCoverProps {
 const PassportCover: React.FC<PassportCoverProps> = ({ isOpen, onOpen }) => {
   return (
     <div 
-      className={`passport-cover relative w-80 h-96 cursor-pointer transition-all duration-700 ${
+      className={`passport-cover relative w-96 h-128 cursor-pointer transition-all duration-700 ${
         isOpen ? 'transform -translate-x-4 rotate-y-12' : 'hover:scale-105'
       }`}
       onClick={onOpen}
       style={{ 
         transform: isOpen ? 'perspective(1000px) rotateY(-12deg) translateX(-20px)' : 'none',
-        transformOrigin: 'right center'
+        transformOrigin: 'right center',
+        margin: '3rem 0'
       }}
     >
       <img 
