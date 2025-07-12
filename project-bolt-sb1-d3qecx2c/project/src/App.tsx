@@ -5,7 +5,9 @@ import PassportPage from './components/PassportPage';
 import Challenges from './components/challenges';
 import PhotoUpload from './components/PhotoUpload';
 import StampPopup from './components/StampPopup';
-import ParticlesBackground from './components/background';
+import StampDetailsPopup from './components/StampDetailsPopup';
+import ParticlesBackground from './components/ParticlesBackground';
+import MagnetButton from './components/MagnetButton';
 import { usePassportAnimation } from './hooks/usePassportAnimation';
 import { useQuests } from './hooks/useQuests';
 import { useWeb3 } from './hooks/useWeb3';
@@ -41,6 +43,8 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
   const [showStampPopup, setShowStampPopup] = useState(false);
+  const [showStampDetailsPopup, setShowStampDetailsPopup] = useState(false);
+  const [selectedStamp, setSelectedStamp] = useState<Stamp | null>(null);
   const [newStampData, setNewStampData] = useState<Quest | null>(null);
   
   const { isAnimating, startAnimation } = usePassportAnimation();
@@ -126,7 +130,12 @@ function App() {
 
   const handleAddStamp = () => {
     // Pour le MVP, on désactive l'ajout manuel de tampons
-    console.log('Ajout de tampon désactivé - utilisez les quêtes');
+    console.log('Ajout de tampon désactivé - utilisez les quests');
+  };
+
+  const handleStampClick = (stamp: Stamp) => {
+    setSelectedStamp(stamp);
+    setShowStampDetailsPopup(true);
   };
   
   const handleMetaMaskConnect = async () => {
@@ -215,6 +224,20 @@ function App() {
     return pages;
   };
 
+  // Gérer la classe du body pour empêcher le scroll sur la page passeport
+  useEffect(() => {
+    if (view === 'passport') {
+      document.body.classList.add('passport-view-body');
+    } else {
+      document.body.classList.remove('passport-view-body');
+    }
+    
+    // Nettoyer la classe quand le composant est démonté
+    return () => {
+      document.body.classList.remove('passport-view-body');
+    };
+  }, [view]);
+
   // Rendu conditionnel basé sur la vue actuelle
   if (view === 'upload' && selectedQuest) {
     return (
@@ -229,22 +252,17 @@ function App() {
   if (view === 'quests') {
     if (!isConnected) {
       return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-8">
-          <button
-            onClick={handleBackToMenuFromQuests}
-            className="menu-button mb-8"
-          >
-            Menu
-          </button>
-          <div className="flex flex-col items-center">
+        <div className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden">
+          <ParticlesBackground />
+          <div className="flex flex-col items-center relative z-10">
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connectez votre wallet MetaMask</h2>
-              <p className="text-white mb-4">Vous devez connecter votre wallet pour accéder aux quêtes.</p>
+              <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connect your MetaMask wallet</h2>
+              <p className="text-white mb-4">You need to connect your wallet to access quests.</p>
               <button
                 onClick={handleMetaMaskConnect}
                 className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-6 rounded shadow-lg transition-colors"
               >
-                Se connecter avec MetaMask
+                Connect with MetaMask
               </button>
             </div>
           </div>
@@ -253,13 +271,10 @@ function App() {
     }
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-8">
-        <button
-          onClick={handleBackToMenuFromQuests}
-          className="menu-button mb-8"
-        >
-          Menu
-        </button>
-        <Challenges />
+        <Challenges 
+          onBackToMenu={handleBackToMenuFromQuests}
+          onOpenCollection={handleOpenPassport}
+        />
       </div>
     );
   }
@@ -268,17 +283,35 @@ function App() {
     // Si l'utilisateur n'est pas connecté, afficher le bouton de connexion MetaMask
     if (!isConnected) {
       return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-8">
-          <button
-            onClick={handleBackToMenu}
-            className="menu-button mb-8"
-          >
-            Menu
-          </button>
-          <div className="flex flex-col items-center">
+        <div className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden">
+          <ParticlesBackground />
+          <div className="absolute top-8 left-8 right-8 z-10">
+            <div className="flex justify-between items-start">
+              <div className="flex flex-col gap-8">
+                <MagnetButton
+                  onClick={handleBackToMenu}
+                  className="menu-button"
+                  strength={0.25}
+                  distance={100}
+                >
+                  Home
+                </MagnetButton>
+                <MagnetButton
+                  onClick={handleOpenQuests}
+                  className="menu-button"
+                  strength={0.25}
+                  distance={100}
+                >
+                  Quests
+                </MagnetButton>
+              </div>
+              <div></div>
+            </div>
+          </div>
+          <div className="flex flex-col items-center relative z-10">
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connectez votre wallet MetaMask</h2>
-              <p className="text-white mb-4">Vous devez connecter votre wallet pour accéder à votre passeport de voyage.</p>
+              <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connect your MetaMask wallet</h2>
+              <p className="text-white mb-4">You need to connect your wallet to access your travel passport.</p>
               {web3Error && (
                 <div className="text-red-400 font-bold mb-2">{web3Error}</div>
               )}
@@ -286,7 +319,7 @@ function App() {
                 onClick={handleMetaMaskConnect}
                 className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-6 rounded shadow-lg transition-colors"
               >
-                Se connecter avec MetaMask
+                Connect with MetaMask
               </button>
             </div>
           </div>
@@ -295,13 +328,30 @@ function App() {
     }
     // Si connecté, afficher les pages du passeport
     return (
-      <div className="min-h-screen flex items-center justify-center p-8">
-        <button
-          onClick={handleBackToMenu}
-          className="menu-button"
-        >
-          Menu
-        </button>
+      <div className="passport-view-container min-h-screen flex items-center justify-center p-8">
+        <div className="absolute top-8 left-8 right-8 z-10">
+          <div className="flex justify-between items-start">
+            <div className="flex flex-col gap-8">
+              <MagnetButton
+                onClick={handleBackToMenu}
+                className="menu-button"
+                strength={0.25}
+                distance={100}
+              >
+                Home
+              </MagnetButton>
+              <MagnetButton
+                onClick={handleOpenQuests}
+                className="menu-button"
+                strength={0.25}
+                distance={100}
+              >
+                Quests
+              </MagnetButton>
+            </div>
+            <div></div>
+          </div>
+        </div>
         <div className="flex flex-col items-center">
           <div className="relative perspective-1000">
             <div className="coverflow-container">
@@ -320,6 +370,7 @@ function App() {
                       pageNumber={pageIndex + 1}
                       stamps={generateStampsForPage(pageIndex + 1)}
                       onAddStamp={handleAddStamp}
+                      onStampClick={handleStampClick}
                       onPrevious={handlePreviousPage}
                       onNext={handleNextPage}
                       isCurrentPage={pageIndex === currentPage}
@@ -329,6 +380,7 @@ function App() {
                         pageNumber={pageIndex + 1}
                         stamps={generateStampsForPage(pageIndex + 1)}
                         onAddStamp={() => {}}
+                        onStampClick={() => {}}
                         isCurrentPage={false}
                       />
                     </div>
@@ -349,24 +401,27 @@ function App() {
             questTitle={newStampData.title}
           />
         )}
+        {/* Pop-up pour détails du tampon */}
+        {showStampDetailsPopup && selectedStamp && (
+          <StampDetailsPopup
+            isOpen={showStampDetailsPopup}
+            onClose={() => setShowStampDetailsPopup(false)}
+            stamp={selectedStamp}
+          />
+        )}
       </div>
     );
   }
 
-  // Vue par défaut : Menu principal avec couverture et quêtes
+  // Vue par défaut : Menu principal avec couverture et quests
   if (!isConnected) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-8">
-        <button
-          onClick={handleBackToMenuFromQuests}
-          className="menu-button mb-8"
-        >
-          Menu
-        </button>
-        <div className="flex flex-col items-center">
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden">
+        <ParticlesBackground />
+        <div className="flex flex-col items-center relative z-10">
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connectez votre wallet MetaMask</h2>
-            <p className="text-white mb-4">Vous devez connecter votre wallet pour accéder aux quêtes.</p>
+            <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connect your MetaMask wallet</h2>
+            <p className="text-white mb-4">You need to connect your wallet to access quests.</p>
             {web3Error && (
               <div className="text-red-400 font-bold mb-2">{web3Error}</div>
             )}
@@ -374,7 +429,7 @@ function App() {
               onClick={handleMetaMaskConnect}
               className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-6 rounded shadow-lg transition-colors"
             >
-              Se connecter avec MetaMask
+              Connect with MetaMask
             </button>
           </div>
         </div>
@@ -405,21 +460,21 @@ function App() {
         </div>
         <div className="text-center mb-8 slide-in">
           <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
-            Passeport de Voyage
+            Travel Passport
           </h1>
           <p className="text-white max-w-md drop-shadow-md">
             {isConnected 
-              && "Connectez votre wallet MetaMask pour débloquer votre passeport de voyage et commencer à collectionner vos tampons."
+              && "Connect your MetaMask wallet to unlock your travel passport and start collecting your stamps."
             }
           </p>
         </div>
-        {/* Bouton pour accéder à la page des quêtes si connecté */}
+        {/* Bouton pour accéder à la page des quests si connecté */}
         {isConnected && (
           <button
             onClick={handleOpenQuests}
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded shadow-lg mb-6 transition-colors"
           >
-            Voir les quêtes
+            View quests
           </button>
         )}
       </div>

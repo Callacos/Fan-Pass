@@ -299,10 +299,7 @@
   }
 
   .menu-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    border-color: linear-gradient(135deg, #2657dc 0%, #b91c1c 100%);
     color: white;
     border: none;
     padding: 12px 24px;
@@ -310,9 +307,10 @@
     font-weight: 600;
     font-size: 16px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    box-shadow: 0 4px 15px rgb(247, 10, 10);
     transition: all 0.3s ease;
     z-index: 1000;
+    position: relative;
   }
 
   .menu-button:hover {
@@ -329,7 +327,7 @@
     position: absolute;
     top: 0;
     height: 100%;
-    width: 30%;
+    width: 10%;
     z-index: 1;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -617,4 +615,16 @@
 
 .h-128 {
   height: 32rem;
+}
+
+/* Empêcher le scroll vertical sur la page passeport */
+.passport-view-body {
+  overflow-y: hidden;
+  height: 100vh;
+}
+
+/* Conteneur pour la vue passeport */
+.passport-view-container {
+  height: 100vh;
+  overflow: hidden;
 }

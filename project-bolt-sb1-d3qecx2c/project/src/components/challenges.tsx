@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useWeb3 } from '../hooks/useWeb3';
 
@@ -14,6 +13,7 @@ const NFT_QUESTS = [
 const Challenges: React.FC = () => {
   const { mintNftForUser, userAddress, connectWallet } = useWeb3();
   const [loading, setLoading] = React.useState<string | null>(null);
+
 
   const handleMint = async (key: string) => {
     if (!userAddress) {

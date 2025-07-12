@@ -13,6 +13,7 @@ interface PassportPageProps {
   pageNumber: number;
   stamps: Stamp[];
   onAddStamp: (slotIndex: number, stamp: Stamp) => void;
+  onStampClick?: (stamp: Stamp) => void;
   onPrevious?: () => void;
   onNext?: () => void;
   isCurrentPage?: boolean;
@@ -22,6 +23,7 @@ const PassportPage: React.FC<PassportPageProps> = ({
   pageNumber,
   stamps,
   onAddStamp,
+  onStampClick,
   onPrevious,
   onNext,
   isCurrentPage = false
@@ -61,8 +63,15 @@ const PassportPage: React.FC<PassportPageProps> = ({
     }
   ];
 
-  const handleSlotClick = (slotIndex: number) => {
-    if (stamps[slotIndex]) return;
+  const handleSlotClick = (slotIndex: number, event: React.MouseEvent) => {
+    // Empêcher la propagation de l'événement pour éviter de déclencher la navigation
+    event.stopPropagation();
+    
+    // Si le tampon existe, ouvrir le popup
+    if (stamps[slotIndex]) {
+      onStampClick?.(stamps[slotIndex]);
+      return;
+    }
 
     const randomStamp = stampTemplates[Math.floor(Math.random() * stampTemplates.length)];
     const newStamp: Stamp = {
@@ -132,37 +141,35 @@ const PassportPage: React.FC<PassportPageProps> = ({
             return (
               <div
                 key={slotIndex}
-                className={`stamp-slot-round rounded-full border-4 border-dashed border-gray-400 cursor-pointer transition-all duration-300 flex items-center justify-center ${getOffsetClass(slotIndex)} ${getMarginClass(slotIndex)} ${
+                className={`stamp-slot-round rounded-full border-4 border-dashed border-gray-400 cursor-pointer transition-all duration-300 flex items-center justify-center relative z-10 ${getOffsetClass(slotIndex)} ${getMarginClass(slotIndex)} ${
                   slotIndex === 1 ? 'w-44 h-44' : 'w-32 h-32'
                 } ${
-                  stamps[slotIndex] ? 'bg-white border-solid shadow-lg' : 'hover:border-red-500 hover:bg-red-50'
+                  stamps[slotIndex] ? 'bg-white border-solid shadow-lg hover:shadow-xl hover:scale-105' : 'hover:border-red-500 hover:bg-red-50'
                 } ${selectedSlot === slotIndex ? 'animate-pulse border-red-500 scale-110' : ''}`}
-                onClick={() => handleSlotClick(slotIndex)}
+                onClick={(event) => handleSlotClick(slotIndex, event)}
               >
               {stamps[slotIndex] ? (
-                <div className={`text-center transform transition-all duration-500 ${
+                <div className={`relative w-full h-full transform transition-all duration-500 ${
                   selectedSlot === slotIndex ? 'scale-110' : 'scale-100'
                 }`}>
-                  <div className="rounded-full p-2 bg-white shadow-md flex items-center justify-center w-28 h-28 border-4 border-green-600">
-                    {stamps[slotIndex].image ? (
-                      <img
-                        src={stamps[slotIndex].image}
-                        alt={`Tampon ${stamps[slotIndex].country}`}
-                        className="h-full w-full object-contain rounded-full"
-                      />
-                    ) : (
+                  {stamps[slotIndex].image ? (
+                    <img
+                      src={stamps[slotIndex].image}
+                      alt={`Tampon ${stamps[slotIndex].country}`}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-white rounded-full flex items-center justify-center">
                       <div className="text-center">
                         <div className="text-green-600 font-bold text-lg">✓</div>
                         <div className="text-green-600 font-bold text-xs mt-1">VALIDÉ</div>
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               ) : (
-                <div className="text-center text-gray-500">
-                  <div className={`rounded-full bg-white shadow-md flex items-center justify-center relative border-4 border-gray-400 ${
-                    slotIndex === 1 ? 'w-40 h-40' : 'w-28 h-28'
-                  }`}>
+                <div className="text-center text-gray-500 w-full h-full">
+                  <div className={`rounded-full bg-white shadow-md flex items-center justify-center relative border-4 border-gray-400 w-full h-full`}>
                     <img 
                       src="/psg.png?v=1" 
                       alt="Tampon PSG" 
