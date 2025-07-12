@@ -74,12 +74,12 @@ const QuestList: React.FC<QuestListProps> = ({ onStartQuest, onOpenPassport }) =
 
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+      <div className="quest-container p-8 mb-8">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+          <h2 className="text-3xl font-bold mb-4">
             Mes Quêtes de Voyage
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="mb-6">
             Complétez les quêtes ci-dessous pour débloquer des tampons exclusifs dans votre passeport !
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
@@ -99,26 +99,24 @@ const QuestList: React.FC<QuestListProps> = ({ onStartQuest, onOpenPassport }) =
           {quests.map((quest) => (
             <div
               key={quest.id}
-              className={`border-2 rounded-xl p-6 transition-all duration-300 ${
-                quest.completed
-                  ? 'border-green-200 bg-green-50'
-                  : 'border-gray-200 hover:border-red-300 hover:shadow-lg'
+              className={`quest-item rounded-xl p-6 transition-all duration-300 ${
+                quest.completed ? 'completed' : ''
               }`}
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-lg ${
-                    quest.completed ? 'bg-green-100' : 'bg-gray-100'
+                    quest.completed ? 'bg-green-600' : 'bg-gray-600'
                   }`}>
                     {quest.completed ? (
-                      <CheckCircle className="w-6 h-6 text-green-600" />
+                      <CheckCircle className="w-6 h-6 text-green-200" />
                     ) : (
-                      <Clock className="w-6 h-6 text-gray-600" />
+                      <Clock className="w-6 h-6 text-gray-300" />
                     )}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800">{quest.title}</h3>
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <h3 className="font-semibold text-white">{quest.title}</h3>
+                    <div className="flex items-center gap-2 text-sm text-gray-300">
                       <MapPin className="w-4 h-4" />
                       <span>Tampon {quest.stampData.country}</span>
                     </div>
@@ -126,27 +124,27 @@ const QuestList: React.FC<QuestListProps> = ({ onStartQuest, onOpenPassport }) =
                 </div>
                 <div className="text-right">
                   <div className={`text-xs px-2 py-1 rounded-full ${
-                    quest.completed ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'
+                    quest.completed ? 'bg-green-600 text-green-200' : 'bg-gray-600 text-gray-300'
                   }`}>
                     {quest.completed ? 'Complétée' : 'En attente'}
                   </div>
                 </div>
               </div>
 
-              <p className="text-gray-600 text-sm mb-4">{quest.description}</p>
+              <p className="text-gray-300 text-sm mb-4">{quest.description}</p>
 
               {quest.completed && quest.proofImage && (
                 <div className="mb-4">
                   <img 
                     src={quest.proofImage} 
                     alt="Preuve de la quête" 
-                    className="w-full h-32 object-cover rounded-lg border-2 border-green-200"
+                    className="w-full h-32 object-cover rounded-lg border-2 border-green-600"
                   />
                 </div>
               )}
 
               <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2 text-sm text-gray-500">
+                <div className="flex items-center gap-2 text-sm text-gray-300">
                   <span>Récompense:</span>
                   <span className={`font-semibold ${quest.stampData.color}`}>
                     {quest.stampData.country}
@@ -157,7 +155,7 @@ const QuestList: React.FC<QuestListProps> = ({ onStartQuest, onOpenPassport }) =
                   disabled={quest.completed}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
                     quest.completed
-                      ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                      ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                       : 'bg-red-600 text-white hover:bg-red-700 transform hover:scale-105'
                   }`}
                 >
