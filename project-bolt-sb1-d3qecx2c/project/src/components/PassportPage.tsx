@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { MapPin, Calendar, Star } from 'lucide-react';
 
 interface Stamp {
   id: string;
@@ -80,7 +79,7 @@ const PassportPage: React.FC<PassportPageProps> = ({
   };
 
   return (
-    <div className="bg-white w-[420px] h-[540px] rounded-lg shadow-xl border border-gray-200 relative overflow-hidden">
+    <div className="bg-gradient-to-b from-black to-white w-[420px] h-[540px] rounded-lg shadow-xl border border-gray-300 relative overflow-hidden">
       {isCurrentPage && onPrevious && (
         <div
           className="page-click-zone left"
@@ -97,71 +96,97 @@ const PassportPage: React.FC<PassportPageProps> = ({
         />
       )}
 
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 to-red-600" />
+      {/* Logo Chiliz au centre en haut */}
+      <div className="absolute top-3 left-1/2 transform -translate-x-1/2">
+        <img 
+          src="/pims.png" 
+          alt="Logo Chiliz" 
+          className="w-16 h-16 object-contain"
+        />
+      </div>
 
-      <div className="p-6 h-full">
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">
-            Page {pageNumber}
-          </h2>
-          <div className="h-px bg-gradient-to-r from-red-200 to-transparent" />
-        </div>
+      <div className="p-6 h-full flex flex-col justify-center items-center pt-24">
+        {/* 3 gros ronds au centre, un en dessous de l'autre */}
+        <div className="flex flex-col items-center">
+          {[0, 1, 2].map((slotIndex) => {
+            // Décalages horizontaux pour chaque tampon
+            const getOffsetClass = (index: number) => {
+              switch (index) {
+                case 0: return '-translate-x-20'; // Premier tampon plus à gauche
+                case 1: return 'translate-x-20';  // Deuxième tampon plus à droite
+                case 2: return '-translate-x-6'; // Troisième tampon plus à gauche
+                default: return '';
+              }
+            };
 
-        <div className="grid grid-cols-1 gap-4 h-72">
-          {[0, 1, 2].map((slotIndex) => (
-            <div
-              key={slotIndex}
-              className={`stamp-slot border-2 border-dashed border-gray-300 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
-                stamps[slotIndex] ? 'bg-gray-50' : 'hover:border-red-300 hover:bg-red-50'
-              } ${selectedSlot === slotIndex ? 'animate-pulse border-red-500' : ''}`}
-              onClick={() => handleSlotClick(slotIndex)}
-            >
+            // Espacement vertical personnalisé
+            const getMarginClass = (index: number) => {
+              switch (index) {
+                case 0: return '';
+                case 1: return 'mt-2';
+                case 2: return ''; // Pas de marge pour le troisième
+                default: return '';
+              }
+            };
+
+            return (
+              <div
+                key={slotIndex}
+                className={`stamp-slot-round rounded-full border-4 border-dashed border-gray-400 cursor-pointer transition-all duration-300 flex items-center justify-center ${getOffsetClass(slotIndex)} ${getMarginClass(slotIndex)} ${
+                  slotIndex === 1 ? 'w-44 h-44' : 'w-32 h-32'
+                } ${
+                  stamps[slotIndex] ? 'bg-white border-solid shadow-lg' : 'hover:border-red-500 hover:bg-red-50'
+                } ${selectedSlot === slotIndex ? 'animate-pulse border-red-500 scale-110' : ''}`}
+                onClick={() => handleSlotClick(slotIndex)}
+              >
               {stamps[slotIndex] ? (
                 <div className={`text-center transform transition-all duration-500 ${
                   selectedSlot === slotIndex ? 'scale-110' : 'scale-100'
                 }`}>
-                  <div className="border-2 border-gray-400 rounded-lg p-3 bg-white shadow-md flex items-center justify-center h-28">
+                  <div className="rounded-full p-2 bg-white shadow-md flex items-center justify-center w-28 h-28 border-4 border-green-600">
                     {stamps[slotIndex].image ? (
                       <img
                         src={stamps[slotIndex].image}
                         alt={`Tampon ${stamps[slotIndex].country}`}
-                        className="h-full object-contain"
+                        className="h-full w-full object-contain rounded-full"
                       />
                     ) : (
-                      <div>
-                        <div className="flex items-center justify-center mb-2">
-                          <MapPin className="w-5 h-5 text-gray-600 mr-2" />
-                          <span className={`font-bold text-lg ${stamps[slotIndex].color}`}>
-                            {stamps[slotIndex].country}
-                          </span>
-                        </div>
-                        <div className="text-sm text-gray-600 mb-1">
-                          {stamps[slotIndex].type}
-                        </div>
-                        <div className="flex items-center justify-center text-xs text-gray-500">
-                          <Calendar className="w-4 h-4 mr-1" />
-                          {stamps[slotIndex].date}
-                        </div>
-                        <div className="flex justify-center mt-2">
-                          <Star className="w-4 h-4 fill-current text-yellow-500" />
-                        </div>
+                      <div className="text-center">
+                        <div className="text-green-600 font-bold text-lg">✓</div>
+                        <div className="text-green-600 font-bold text-xs mt-1">VALIDÉ</div>
                       </div>
                     )}
                   </div>
                 </div>
               ) : (
-                <div className="text-center text-gray-400 py-8">
-                  <div className="w-16 h-16 mx-auto mb-2 border-2 border-dashed border-gray-300 rounded-full flex items-center justify-center">
-                    <MapPin className="w-8 h-8" />
+                <div className="text-center text-gray-500">
+                  <div className={`rounded-full bg-white shadow-md flex items-center justify-center relative border-4 border-gray-400 ${
+                    slotIndex === 1 ? 'w-40 h-40' : 'w-28 h-28'
+                  }`}>
+                    <img 
+                      src="/psg.png?v=1" 
+                      alt="Tampon PSG" 
+                      className={`object-contain opacity-80 transform rotate-45 ${
+                        slotIndex === 1 ? 'w-36 h-36' : 'w-24 h-24'
+                      }`}
+                      style={{
+                        filter: 'grayscale(100%) brightness(0.6) contrast(1.2)',
+                      }}
+                      onError={(e) => {
+                        console.error('Erreur de chargement de l\'image PSG:', e);
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
                   </div>
-                  <p className="text-sm">Cliquez pour tamponner</p>
                 </div>
               )}
             </div>
-          ))}
+            );
+          })}
         </div>
 
-        <div className="absolute bottom-4 right-4 text-xs text-gray-400">
+        {/* Numéro de page en bas à droite */}
+        <div className="absolute bottom-4 right-4 text-xs text-gray-500 font-semibold">
           {pageNumber.toString().padStart(2, '0')}
         </div>
       </div>

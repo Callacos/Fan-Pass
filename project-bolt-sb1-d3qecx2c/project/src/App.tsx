@@ -223,70 +223,73 @@ function App() {
 
   if (view === 'passport' && isPassportOpen) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-8">
-        <button
-          onClick={handleBackToMenu}
-          className="menu-button"
-        >
-          Menu
-        </button>
-        
-        <div className="flex flex-col items-center">
-          <div className="relative perspective-1000">
-            <div className="coverflow-container">
-              {getVisiblePages().map((pageIndex) => (
-                <div
-                  key={`page-${pageIndex}`}
-                  className={`coverflow-page ${getCoverFlowClass(pageIndex)}`}
-                  onClick={() => handlePageClick(pageIndex)}
-                  style={{ 
-                    cursor: pageIndex !== currentPage ? 'pointer' : 'default',
-                    transition: 'transform 0.3s ease-in-out' 
-                  }}
-                >
-                  <div className="page-with-reflection">
-                    <PassportPage
-                      pageNumber={pageIndex + 1}
-                      stamps={generateStampsForPage(pageIndex + 1)}
-                      onAddStamp={handleAddStamp}
-                      onPrevious={handlePreviousPage}
-                      onNext={handleNextPage}
-                      isCurrentPage={pageIndex === currentPage}
-                    />
-                    <div className="page-reflection">
+      <>
+        <div className="min-h-screen flex items-center justify-center p-8 relative">
+          <button
+            onClick={handleBackToMenu}
+            className="menu-button absolute top-4 left-4"
+            style={{ zIndex: 10000 }}
+          >
+            Menu
+          </button>
+          
+          <div className="flex flex-col items-center">
+            <div className="relative perspective-1000">
+              <div className="coverflow-container">
+                {getVisiblePages().map((pageIndex) => (
+                  <div
+                    key={`page-${pageIndex}`}
+                    className={`coverflow-page ${getCoverFlowClass(pageIndex)}`}
+                    onClick={() => handlePageClick(pageIndex)}
+                    style={{ 
+                      cursor: pageIndex !== currentPage ? 'pointer' : 'default',
+                      transition: 'transform 0.3s ease-in-out' 
+                    }}
+                  >
+                    <div className="page-with-reflection">
                       <PassportPage
                         pageNumber={pageIndex + 1}
                         stamps={generateStampsForPage(pageIndex + 1)}
-                        onAddStamp={() => {}}
-                        isCurrentPage={false}
+                        onAddStamp={handleAddStamp}
+                        onPrevious={handlePreviousPage}
+                        onNext={handleNextPage}
+                        isCurrentPage={pageIndex === currentPage}
                       />
+                      <div className="page-reflection">
+                        <PassportPage
+                          pageNumber={pageIndex + 1}
+                          stamps={generateStampsForPage(pageIndex + 1)}
+                          onAddStamp={() => {}}
+                          isCurrentPage={false}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="reflection-fade-mask"></div>
+          <div className="reflection-fade-mask"></div>
 
-        {/* Pop-up pour nouveau tampon */}
-        {showStampPopup && newStampData && (
-          <StampPopup
-            isOpen={showStampPopup}
-            onClose={() => setShowStampPopup(false)}
-            stampData={newStampData.stampData}
-            stampImage={newStampData.stampImage}
-            questTitle={newStampData.title}
-          />
-        )}
-      </div>
+          {/* Pop-up pour nouveau tampon */}
+          {showStampPopup && newStampData && (
+            <StampPopup
+              isOpen={showStampPopup}
+              onClose={() => setShowStampPopup(false)}
+              stampData={newStampData.stampData}
+              stampImage={newStampData.stampImage}
+              questTitle={newStampData.title}
+            />
+          )}
+        </div>
+      </>
     );
   }
 
   // Vue par défaut : Menu principal avec couverture et quêtes
   return (
     <div className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden">
-      {/* Fond de particules animées */}
+      {/* Fond de particules animées pour le menu */}
       <ParticlesBackground />
       
       <div className="flex flex-col items-center" style={{ zIndex: 5 }}>
