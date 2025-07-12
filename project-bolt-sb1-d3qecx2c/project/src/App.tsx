@@ -6,6 +6,7 @@ import Challenges from './components/challenges';
 import PhotoUpload from './components/PhotoUpload';
 import StampPopup from './components/StampPopup';
 import ParticlesBackground from './components/background';
+import MagnetButton from './components/MagnetButton';
 import { usePassportAnimation } from './hooks/usePassportAnimation';
 import { useQuests } from './hooks/useQuests';
 import { useWeb3 } from './hooks/useWeb3';
@@ -269,12 +270,26 @@ function App() {
     if (!isConnected) {
       return (
         <div className="min-h-screen flex flex-col items-center justify-center p-8">
-          <button
-            onClick={handleBackToMenu}
-            className="menu-button mb-8"
-          >
-            Menu
-          </button>
+          <div className="absolute top-8 left-8 right-8 flex justify-between items-center z-10">
+            <MagnetButton
+              onClick={handleOpenQuests}
+              className="menu-button"
+              strength={0.4}
+              distance={120}
+            >
+              Quêtes
+            </MagnetButton>
+            <div className="mt-4">
+              <MagnetButton
+                onClick={handleBackToMenu}
+                className="menu-button"
+                strength={0.4}
+                distance={120}
+              >
+                Menu
+              </MagnetButton>
+            </div>
+          </div>
           <div className="flex flex-col items-center">
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connectez votre wallet MetaMask</h2>
@@ -296,12 +311,26 @@ function App() {
     // Si connecté, afficher les pages du passeport
     return (
       <div className="min-h-screen flex items-center justify-center p-8">
-        <button
-          onClick={handleBackToMenu}
-          className="menu-button"
-        >
-          Menu
-        </button>
+        <div className="absolute top-8 left-8 right-8 flex justify-between items-center z-10">
+          <MagnetButton
+            onClick={handleOpenQuests}
+            className="menu-button"
+            strength={0.4}
+            distance={120}
+          >
+            Quêtes
+          </MagnetButton>
+          <div className="mt-4">
+            <MagnetButton
+              onClick={handleBackToMenu}
+              className="menu-button"
+              strength={0.4}
+              distance={120}
+            >
+              Menu
+            </MagnetButton>
+          </div>
+        </div>
         <div className="flex flex-col items-center">
           <div className="relative perspective-1000">
             <div className="coverflow-container">
