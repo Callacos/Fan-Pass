@@ -264,7 +264,7 @@ function App() {
       <div className="min-h-screen flex flex-col items-center justify-center p-8">
         <Challenges 
           onBackToMenu={handleBackToMenuFromQuests}
-          onOpenQuests={handleOpenQuests}
+          onOpenCollection={handleOpenPassport}
         />
       </div>
     );

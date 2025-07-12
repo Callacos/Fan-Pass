@@ -26,10 +26,10 @@ interface ChallengeWithPosition extends Challenge {
 
 interface ChallengesProps {
   onBackToMenu?: () => void;
-  onOpenQuests?: () => void;
+  onOpenCollection?: () => void;
 }
 
-const Challenges: React.FC<ChallengesProps> = ({ onBackToMenu, onOpenQuests }) => {
+const Challenges: React.FC<ChallengesProps> = ({ onBackToMenu, onOpenCollection }) => {
   const challengeDatabase: Challenge[] = [
     { emoji: "⚽", xp: 50, progress: 70, status: "active", name: "Premier Fan Token", category: "social", description: "Obtenez votre premier Fan Token sur la Chiliz Chain", objective: "Acheter 1 Fan Token" },
     { emoji: "🗳️", xp: 100, progress: 40, status: "active", name: "Démocrate Numérique", category: "governance", description: "Participez aux votes de votre équipe favorite", objective: "Voter 5 fois" },
@@ -206,12 +206,12 @@ const Challenges: React.FC<ChallengesProps> = ({ onBackToMenu, onOpenQuests }) =
             Menu
           </MagnetButton>
           <MagnetButton
-            onClick={onOpenQuests || (() => console.log('Déjà sur la page quests'))}
+            onClick={onOpenCollection || (() => console.log('Ouvrir collection'))}
             className="menu-button"
             strength={0.25}
             distance={100}
           >
-            Quests
+            Collection
           </MagnetButton>
         </div>
       </div>
