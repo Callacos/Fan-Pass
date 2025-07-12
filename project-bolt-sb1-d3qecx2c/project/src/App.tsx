@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PassportCover from './components/PassportCover';
+import PassportVachette from './components/PassportVachette';
 import PassportPage from './components/PassportPage';
 import QuestList from './components/QuestList';
 import PhotoUpload from './components/PhotoUpload';
 import StampPopup from './components/StampPopup';
+import ParticlesBackground from './components/background';
 import { usePassportAnimation } from './hooks/usePassportAnimation';
 import { useQuests } from './hooks/useQuests';
 
@@ -38,6 +40,7 @@ function App() {
   const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
   const [showStampPopup, setShowStampPopup] = useState(false);
   const [newStampData, setNewStampData] = useState<Quest | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
   
   const { isAnimating, startAnimation } = usePassportAnimation();
   const { completeQuest, getCompletedQuests } = useQuests();
@@ -95,6 +98,24 @@ function App() {
   const handleAddStamp = () => {
     // Pour le MVP, on désactive l'ajout manuel de tampons
     console.log('Ajout de tampon désactivé - utilisez les quêtes');
+  };
+
+  const handleMetaMaskConnect = () => {
+    // Simulation de connexion MetaMask
+    setIsConnected(true);
+    console.log('Connexion MetaMask réussie');
+    // Ici, vous pourriez ajouter la vraie logique de connexion MetaMask
+  };
+
+  // Nouvelle fonction pour gérer le clic sur les pages adjacentes
+  const handlePageClick = (pageIndex: number) => {
+    if (pageIndex !== currentPage && !isAnimating) {
+      const direction = pageIndex > currentPage ? 'forward' : 'backward';
+      startAnimation(direction);
+      setTimeout(() => {
+        setCurrentPage(pageIndex);
+      }, 100);
+    }
   };
 
   // Générer les tampons basés sur les quêtes complétées
@@ -215,7 +236,12 @@ function App() {
               {getVisiblePages().map((pageIndex) => (
                 <div
                   key={`page-${pageIndex}`}
-                  className={`coverflow-page ${getCoverFlowClass(pageIndex)} ${isAnimating ? 'transitioning' : ''}`}
+                  className={`coverflow-page ${getCoverFlowClass(pageIndex)}`}
+                  onClick={() => handlePageClick(pageIndex)}
+                  style={{ 
+                    cursor: pageIndex !== currentPage ? 'pointer' : 'default',
+                    transition: 'transform 0.3s ease-in-out' 
+                  }}
                 >
                   <div className="page-with-reflection">
                     <PassportPage
@@ -227,22 +253,20 @@ function App() {
                       isCurrentPage={pageIndex === currentPage}
                     />
                     <div className="page-reflection">
-  <PassportPage
-    pageNumber={pageIndex + 1}
-    stamps={generateStampsForPage(pageIndex + 1)}
-    onAddStamp={() => {}}
-    isCurrentPage={false}
-  />
-</div>
+                      <PassportPage
+                        pageNumber={pageIndex + 1}
+                        stamps={generateStampsForPage(pageIndex + 1)}
+                        onAddStamp={() => {}}
+                        isCurrentPage={false}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
-
           </div>
         </div>
         <div className="reflection-fade-mask"></div>
-
 
         {/* Pop-up pour nouveau tampon */}
         {showStampPopup && newStampData && (
@@ -260,25 +284,41 @@ function App() {
 
   // Vue par défaut : Menu principal avec couverture et quêtes
   return (
-    <div className="min-h-screen flex items-center justify-center p-8">
-      <div className="flex flex-col items-center">
+    <div className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden">
+      {/* Fond de particules animées */}
+      <ParticlesBackground />
+      
+      <div className="flex flex-col items-center" style={{ zIndex: 5 }}>
         <div className="relative mb-8">
           <div className="slide-in">
-            <PassportCover isOpen={false} onOpen={handleOpenPassport} />
+            {/* Afficher le passeport selon l'état de connexion */}
+            {isConnected ? (
+              <PassportCover isOpen={false} onOpen={handleOpenPassport} />
+            ) : (
+              <PassportVachette 
+                onConnect={handleMetaMaskConnect}
+                onOpen={handleOpenPassport}
+              />
+            )}
           </div>
         </div>
         
         <div className="text-center mb-8 slide-in">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+          <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
             Passeport de Voyage
           </h1>
-          <p className="text-gray-600 max-w-md">
-            Découvrez votre passeport interactif. Cliquez sur la couverture pour l'ouvrir 
-            et commencer à collectionner vos tampons de voyage.
+          <p className="text-white max-w-md drop-shadow-md">
+            {isConnected 
+              ? "Découvrez votre passeport interactif. Cliquez sur la couverture pour l'ouvrir et commencer à collectionner vos tampons de voyage."
+              : "Connectez votre wallet MetaMask pour débloquer votre passeport de voyage et commencer à collectionner vos tampons."
+            }
           </p>
         </div>
 
-        <QuestList onStartQuest={handleStartQuest} onOpenPassport={handleOpenPassport} />
+        {/* Afficher les quêtes seulement si connecté */}
+        {isConnected && (
+          <QuestList onStartQuest={handleStartQuest} onOpenPassport={handleOpenPassport} />
+        )}
       </div>
     </div>
   );

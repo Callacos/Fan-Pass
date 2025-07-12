@@ -80,7 +80,7 @@ const PassportPage: React.FC<PassportPageProps> = ({
   };
 
   return (
-    <div className="bg-white w-80 h-96 rounded-lg shadow-xl border border-gray-200 relative overflow-hidden">
+    <div className="bg-white w-[420px] h-[540px] rounded-lg shadow-xl border border-gray-200 relative overflow-hidden">
       {isCurrentPage && onPrevious && (
         <div
           className="page-click-zone left"

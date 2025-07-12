@@ -5,16 +5,14 @@ export const usePassportAnimation = () => {
   const [animationDirection, setAnimationDirection] = useState<'forward' | 'backward'>('forward');
 
   const startAnimation = useCallback((direction: 'forward' | 'backward') => {
-    if (isAnimating) return; // Empêche les animations multiples
-    
     setIsAnimating(true);
     setAnimationDirection(direction);
     
-    // Animation fluide et réactive
+    // Animation fluide et réactive - synchronisée avec le CSS
     setTimeout(() => {
       setIsAnimating(false);
-    }, 800);
-  }, [isAnimating]);
+    }, 400); // Durée réduite pour plus de réactivité
+  }, []);
 
   return {
     isAnimating,

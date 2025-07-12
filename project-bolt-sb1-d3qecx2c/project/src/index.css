@@ -58,7 +58,6 @@
   }
 
   .passport-cover {
-    background: linear-gradient(135deg, #b91c1c 0%, #dc2626 50%, #991b1b 100%);
     position: relative;
     overflow: hidden;
   }
@@ -147,16 +146,16 @@
     transform-style: preserve-3d;
     gap: 0;
     width: 100%;
-    height: 650px;
+    height: 950px;
     position: relative;
     overflow: visible;
-    padding-bottom: 100px;
-    padding-top: 50px;
+    padding-bottom: 140px;
+    padding-top: 70px;
   }
 
   .coverflow-page {
     position: absolute;
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform-style: preserve-3d;
     transform-origin: center center;
     will-change: transform, opacity;
@@ -184,6 +183,7 @@
     background: rgba(0, 0, 0, 0.02);
     mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
     -webkit-mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
+    height: 350px;
   }
   .coverflow-page:not(.center) .page-reflection {
     display: none;
@@ -224,44 +224,39 @@
   /* Pages à droite */
   .coverflow-page.right-1 {
     z-index: 49;
-    transform: translateX(320px) translateZ(-50px) rotateY(-45deg) scale(0.85);
+    transform: translateX(450px) translateZ(-50px) rotateY(-45deg) scale(0.85);
     opacity: 1;
   }
 
   .coverflow-page.right-2 {
     z-index: 48;
-    transform: translateX(490px) translateZ(-100px) rotateY(-60deg) scale(0.7);
+    transform: translateX(650px) translateZ(-100px) rotateY(-60deg) scale(0.7);
     opacity: 1;
   }
 
   .coverflow-page.right-3 {
     z-index: 47;
-    transform: translateX(620px) translateZ(-150px) rotateY(-70deg) scale(0.55);
+    transform: translateX(820px) translateZ(-150px) rotateY(-70deg) scale(0.55);
     opacity: 1;
   }
 
   /* Pages à gauche */
   .coverflow-page.left-1 {
     z-index: 49;
-    transform: translateX(-320px) translateZ(-50px) rotateY(45deg) scale(0.85);
+    transform: translateX(-450px) translateZ(-50px) rotateY(45deg) scale(0.85);
     opacity: 1;
   }
 
   .coverflow-page.left-2 {
     z-index: 48;
-    transform: translateX(-490px) translateZ(-100px) rotateY(60deg) scale(0.7);
+    transform: translateX(-650px) translateZ(-100px) rotateY(60deg) scale(0.7);
     opacity: 1;
   }
 
   .coverflow-page.left-3 {
     z-index: 47;
-    transform: translateX(-620px) translateZ(-150px) rotateY(70deg) scale(0.55);
+    transform: translateX(-820px) translateZ(-150px) rotateY(70deg) scale(0.55);
     opacity: 1;
-  }
-
-  /* Animation de transition améliorée */
-  .coverflow-page.transitioning {
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Effet de survol amélioré */
@@ -275,11 +270,11 @@
   }
 
   .coverflow-page.right-1:hover {
-    transform: translateX(320px) translateZ(-30px) rotateY(-40deg) scale(0.88);
+    transform: translateX(450px) translateZ(-30px) rotateY(-40deg) scale(0.88);
   }
 
   .coverflow-page.left-1:hover {
-    transform: translateX(-320px) translateZ(-30px) rotateY(40deg) scale(0.88);
+    transform: translateX(-450px) translateZ(-30px) rotateY(40deg) scale(0.88);
   }
 
   /* Animation de rotation plus fluide */
@@ -375,4 +370,181 @@
   .page-click-zone.right::before {
     display: none;
   }
+
+  .metamask-connect-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .metamask-connect-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  }
+
+  .metamask-connect-button:active {
+    transform: scale(0.98);
+  }
+
+  .metamask-connect-button svg {
+    flex-shrink: 0;
+  }
+
+  .passport-vachette {
+    width: 300px;
+    height: 420px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(51, 50, 50, 0.007);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .passport-vachette:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .passport-vachette-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+  }
+
+  .passport-vachette-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #495057;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .passport-vachette-subtitle {
+    font-size: 12px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .passport-vachette-image {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vachette-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) brightness(0.7) contrast(1.2);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+  }
+
+  .passport-vachette:hover .vachette-bg-image {
+    filter: grayscale(80%) brightness(0.8) contrast(1.1);
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+
+  .passport-vachette-footer {
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .passport-vachette-serial {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .serial-label {
+    font-size: 11px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .serial-number {
+    font-size: 12px;
+    font-weight: 600;
+    color: #495057;
+    font-family: 'Courier New', monospace;
+  }
+
+  .passport-vachette-connect-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+
+  .passport-vachette-connect-button {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .passport-vachette-connect-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  }
+
+  .passport-vachette-connect-button:active {
+    transform: scale(0.98);
+  }
+
+  /* Effet de clic sur les pages adjacentes */
+  .coverflow-page:not(.center):hover {
+    cursor: pointer;
+  }
+
+  .coverflow-page:not(.center):hover .page-with-reflection {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+  }
+
+  .coverflow-page:not(.center):active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
+.coverflow-disabled {
+  pointer-events: none;
 }
