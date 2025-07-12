@@ -140,29 +140,27 @@ const PassportPage: React.FC<PassportPageProps> = ({
                 onClick={() => handleSlotClick(slotIndex)}
               >
               {stamps[slotIndex] ? (
-                <div className={`text-center transform transition-all duration-500 ${
+                <div className={`relative w-full h-full transform transition-all duration-500 ${
                   selectedSlot === slotIndex ? 'scale-110' : 'scale-100'
                 }`}>
-                  <div className="rounded-full p-2 bg-white shadow-md flex items-center justify-center w-28 h-28">
-                    {stamps[slotIndex].image ? (
-                      <img
-                        src={stamps[slotIndex].image}
-                        alt={`Tampon ${stamps[slotIndex].country}`}
-                        className="h-full w-full object-contain rounded-full"
-                      />
-                    ) : (
+                  {stamps[slotIndex].image ? (
+                    <img
+                      src={stamps[slotIndex].image}
+                      alt={`Tampon ${stamps[slotIndex].country}`}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-white rounded-full flex items-center justify-center">
                       <div className="text-center">
                         <div className="text-green-600 font-bold text-lg">✓</div>
                         <div className="text-green-600 font-bold text-xs mt-1">VALIDÉ</div>
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               ) : (
-                <div className="text-center text-gray-500">
-                  <div className={`rounded-full bg-white shadow-md flex items-center justify-center relative border-4 border-gray-400 ${
-                    slotIndex === 1 ? 'w-40 h-40' : 'w-28 h-28'
-                  }`}>
+                <div className="text-center text-gray-500 w-full h-full">
+                  <div className={`rounded-full bg-white shadow-md flex items-center justify-center relative border-4 border-gray-400 w-full h-full`}>
                     <img 
                       src="/psg.png?v=1" 
                       alt="Tampon PSG" 
