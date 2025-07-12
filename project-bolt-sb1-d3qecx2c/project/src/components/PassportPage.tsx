@@ -143,7 +143,7 @@ const PassportPage: React.FC<PassportPageProps> = ({
                 <div className={`text-center transform transition-all duration-500 ${
                   selectedSlot === slotIndex ? 'scale-110' : 'scale-100'
                 }`}>
-                  <div className="rounded-full p-2 bg-white shadow-md flex items-center justify-center w-28 h-28 border-4 border-green-600">
+                  <div className="rounded-full p-2 bg-white shadow-md flex items-center justify-center w-28 h-28">
                     {stamps[slotIndex].image ? (
                       <img
                         src={stamps[slotIndex].image}
