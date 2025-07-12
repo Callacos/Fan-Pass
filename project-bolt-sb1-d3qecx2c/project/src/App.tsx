@@ -262,7 +262,10 @@ function App() {
     }
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-8">
-        <Challenges />
+        <Challenges 
+          onBackToMenu={handleBackToMenuFromQuests}
+          onOpenQuests={handleOpenQuests}
+        />
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import MagnetButton from './MagnetButton';
 
 interface Challenge {
   emoji: string;
@@ -23,7 +24,12 @@ interface ChallengeWithPosition extends Challenge {
   position: ChallengePosition;
 }
 
-const Challenges: React.FC = () => {
+interface ChallengesProps {
+  onBackToMenu?: () => void;
+  onOpenQuests?: () => void;
+}
+
+const Challenges: React.FC<ChallengesProps> = ({ onBackToMenu, onOpenQuests }) => {
   const challengeDatabase: Challenge[] = [
     { emoji: "⚽", xp: 50, progress: 70, status: "active", name: "Premier Fan Token", category: "social", description: "Obtenez votre premier Fan Token sur la Chiliz Chain", objective: "Acheter 1 Fan Token" },
     { emoji: "🗳️", xp: 100, progress: 40, status: "active", name: "Démocrate Numérique", category: "governance", description: "Participez aux votes de votre équipe favorite", objective: "Voter 5 fois" },
@@ -188,6 +194,27 @@ const Challenges: React.FC = () => {
   }));
   return (
     <div className="min-h-screen text-white font-mono relative overflow-x-hidden" style={{ zIndex: 10 }}>
+      {/* Boutons Menu et Quests */}
+      <div className="fixed top-8 left-6 z-30">
+        <div className="flex flex-col gap-6">
+          <MagnetButton
+            onClick={onBackToMenu || (() => console.log('Retour au menu'))}
+            className="menu-button"
+            strength={0.25}
+            distance={100}
+          >
+            Menu
+          </MagnetButton>
+          <MagnetButton
+            onClick={onOpenQuests || (() => console.log('Déjà sur la page quests'))}
+            className="menu-button"
+            strength={0.25}
+            distance={100}
+          >
+            Quests
+          </MagnetButton>
+        </div>
+      </div>
       <style jsx>{`
         @keyframes challengeAppear {
           from {
