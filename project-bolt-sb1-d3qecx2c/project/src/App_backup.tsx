@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import PassportCover from './components/PassportCover';
-import PassportVachette from './components/PassportVachette';
-import PassportPage from './components/PassportPage';
-import QuestList from './components/QuestList';
-import PhotoUpload from './components/PhotoUpload';
-import StampPopup from './components/StampPopup';
-import { usePassportAnimation } from './hooks/usePassportAnimation';
-import { useQuests } from './hooks/useQuests';
-import meta from './image/meta.png';
+import { useState, useEffect } from "react";
+import PassportCover from "./components/PassportCover";
+import PassportVachette from "./components/PassportVachette";
+import PassportPage from "./components/PassportPage";
+import QuestList from "./components/QuestList";
+import PhotoUpload from "./components/PhotoUpload";
+import StampPopup from "./components/StampPopup";
+import { usePassportAnimation } from "./hooks/usePassportAnimation";
+import { useQuests } from "./hooks/useQuests";
+import meta from "./image/meta.png";
 
 interface Stamp {
   id: string;
@@ -34,17 +34,17 @@ interface Quest {
 }
 
 function App() {
-  const [view, setView] = useState<'menu' | 'passport' | 'upload'>('menu');
+  const [view, setView] = useState<"menu" | "passport" | "upload">("menu");
   const [isPassportOpen, setIsPassportOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
   const [showStampPopup, setShowStampPopup] = useState(false);
   const [newStampData, setNewStampData] = useState<Quest | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  
+
   const { isAnimating, startAnimation } = usePassportAnimation();
   const { completeQuest, getCompletedQuests } = useQuests();
-  
+
   const totalPages = 8;
 
   // Vérifier les nouveaux tampons débloqués quand on change de page
@@ -55,23 +55,23 @@ function App() {
   }, [currentPage, isPassportOpen]);
 
   const handleOpenPassport = () => {
-    setView('passport');
+    setView("passport");
     setIsPassportOpen(true);
   };
 
   const handleStartQuest = (quest: Quest) => {
     setSelectedQuest(quest);
-    setView('upload');
+    setView("upload");
   };
 
   const handlePhotoSubmit = (questId: string, imageData: string) => {
     completeQuest(questId, imageData);
     setSelectedQuest(null);
-    setView('menu');
+    setView("menu");
   };
 
   const handleBackToMenu = () => {
-    setView('menu');
+    setView("menu");
     setIsPassportOpen(false);
     setCurrentPage(0);
     setSelectedQuest(null);
@@ -79,7 +79,7 @@ function App() {
 
   const handlePreviousPage = () => {
     if (currentPage > 0 && !isAnimating) {
-      startAnimation('backward');
+      startAnimation("backward");
       setTimeout(() => {
         setCurrentPage(currentPage - 1);
       }, 100);
@@ -88,7 +88,7 @@ function App() {
 
   const handleNextPage = () => {
     if (currentPage < totalPages - 1 && !isAnimating) {
-      startAnimation('forward');
+      startAnimation("forward");
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
       }, 100);
@@ -97,13 +97,13 @@ function App() {
 
   const handleAddStamp = () => {
     // Pour le MVP, on désactive l'ajout manuel de tampons
-    console.log('Ajout de tampon désactivé - utilisez les quêtes');
+    console.log("Ajout de tampon désactivé - utilisez les quêtes");
   };
 
   const handleMetaMaskConnect = () => {
     // Simulation de connexion MetaMask
     setIsConnected(true);
-    console.log('Connexion MetaMask réussie');
+    console.log("Connexion MetaMask réussie");
     // Ici, vous pourriez ajouter la vraie logique de connexion MetaMask
   };
 
@@ -117,15 +117,15 @@ function App() {
   // Générer les tampons basés sur les quêtes complétées
   const generateStampsForPage = (pageNumber: number): Stamp[] => {
     const completedQuests = getCompletedQuests();
-    
+
     // Calculer combien de tampons ont été placés avant cette page
     const slotsPerPage = 3;
     const startIndex = (pageNumber - 1) * slotsPerPage;
     const endIndex = startIndex + slotsPerPage;
-    
+
     // Prendre les quêtes pour cette page spécifique
     const questsForThisPage = completedQuests.slice(startIndex, endIndex);
-    
+
     // Convertir en tampons et compléter avec des slots vides
     const stamps: Stamp[] = [];
     for (let i = 0; i < slotsPerPage; i++) {
@@ -135,11 +135,11 @@ function App() {
           country: questsForThisPage[i].stampData.country,
           date: questsForThisPage[i].stampData.date,
           type: questsForThisPage[i].stampData.type,
-          color: questsForThisPage[i].stampData.color
+          color: questsForThisPage[i].stampData.color,
         });
       }
     }
-    
+
     return stamps;
   };
 
@@ -152,23 +152,25 @@ function App() {
   // Fonction pour vérifier si une nouvelle quête a été ajoutée sur la page actuelle
   const checkForNewStampsOnCurrentPage = () => {
     const completedQuests = getCompletedQuests();
-    
+
     // Trouver la dernière quête complétée
     if (completedQuests.length > 0) {
       const lastQuestIndex = completedQuests.length - 1;
       const pageWithNewStamp = getPageForQuest(lastQuestIndex);
-      
+
       // Si la nouvelle quête est sur la page actuelle, déclencher le popup
       if (pageWithNewStamp === currentPage + 1) {
         const lastQuest = completedQuests[lastQuestIndex];
         const questId = lastQuest.id;
-        const shownStamps = JSON.parse(localStorage.getItem('shownStamps') || '[]');
-        
+        const shownStamps = JSON.parse(
+          localStorage.getItem("shownStamps") || "[]"
+        );
+
         if (!shownStamps.includes(questId)) {
           setNewStampData(lastQuest);
           setShowStampPopup(true);
           shownStamps.push(questId);
-          localStorage.setItem('shownStamps', JSON.stringify(shownStamps));
+          localStorage.setItem("shownStamps", JSON.stringify(shownStamps));
         }
       }
     }
@@ -176,37 +178,49 @@ function App() {
 
   const getCoverFlowClass = (pageIndex: number) => {
     const diff = pageIndex - currentPage;
-    
+
     switch (diff) {
-      case 0: return 'center';
-      case 1: return 'right-1';
-      case 2: return 'right-2';
-      case 3: return 'right-3';
-      case -1: return 'left-1';
-      case -2: return 'left-2';
-      case -3: return 'left-3';
-      default: return diff > 3 ? 'right-3' : 'left-3';
+      case 0:
+        return "center";
+      case 1:
+        return "right-1";
+      case 2:
+        return "right-2";
+      case 3:
+        return "right-3";
+      case -1:
+        return "left-1";
+      case -2:
+        return "left-2";
+      case -3:
+        return "left-3";
+      default:
+        return diff > 3 ? "right-3" : "left-3";
     }
   };
 
   const getVisiblePages = () => {
     const pages = [];
-    
+
     for (let i = Math.max(0, currentPage - 3); i < currentPage; i++) {
       pages.push(i);
     }
-    
+
     pages.push(currentPage);
-    
-    for (let i = currentPage + 1; i <= Math.min(totalPages - 1, currentPage + 3); i++) {
+
+    for (
+      let i = currentPage + 1;
+      i <= Math.min(totalPages - 1, currentPage + 3);
+      i++
+    ) {
       pages.push(i);
     }
-    
+
     return pages;
   };
 
   // Rendu conditionnel basé sur la vue actuelle
-  if (view === 'upload' && selectedQuest) {
+  if (view === "upload" && selectedQuest) {
     return (
       <PhotoUpload
         quest={selectedQuest}
@@ -216,16 +230,13 @@ function App() {
     );
   }
 
-  if (view === 'passport' && isPassportOpen) {
+  if (view === "passport" && isPassportOpen) {
     return (
       <div className="min-h-screen flex items-center justify-center p-8">
-        <button
-          onClick={handleBackToMenu}
-          className="menu-button"
-        >
+        <button onClick={handleBackToMenu} className="menu-button">
           Menu
         </button>
-        
+
         <div className="flex flex-col items-center">
           <div className="relative perspective-1000">
             <div className="coverflow-container">
@@ -234,7 +245,9 @@ function App() {
                   key={`page-${pageIndex}`}
                   className={`coverflow-page ${getCoverFlowClass(pageIndex)}`}
                   onClick={() => handlePageClick(pageIndex)}
-                  style={{ cursor: pageIndex !== currentPage ? 'pointer' : 'default' }}
+                  style={{
+                    cursor: pageIndex !== currentPage ? "pointer" : "default",
+                  }}
                 >
                   <div className="page-with-reflection">
                     <PassportPage
@@ -257,11 +270,9 @@ function App() {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
         <div className="reflection-fade-mask"></div>
-
 
         {/* Pop-up pour nouveau tampon */}
         {showStampPopup && newStampData && (
@@ -286,10 +297,8 @@ function App() {
           onClick={handleMetaMaskConnect}
           className="metamask-connect-button"
         >
-          <img src={meta}
-            alt="MetaMask Logo"
-            className="w-6 h-6 mr-2"/>
-          Se connecter
+          <img src={meta} alt="MetaMask Logo" className="w-6 h-6 mr-2" />
+          CONNECT TO YOUR WALLET VIA METAMASK
         </button>
       )}
 
@@ -300,31 +309,31 @@ function App() {
             {isConnected ? (
               <PassportCover isOpen={false} onOpen={handleOpenPassport} />
             ) : (
-              <PassportVachette 
+              <PassportVachette
                 onConnect={handleMetaMaskConnect}
                 onOpen={handleOpenPassport}
-                title="Passeport Web3"
-                subtitle="Connectez-vous pour débloquer"
+                title="FAN PASS"
+                subtitle="Connect to unlock"
               />
             )}
           </div>
         </div>
-        
+
         <div className="text-center mb-8 slide-in">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            Passeport de Voyage
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">FAN PASS</h1>
           <p className="text-gray-600 max-w-md">
-            {isConnected 
+            {isConnected
               ? "Découvrez votre passeport interactif. Cliquez sur la couverture pour l'ouvrir et commencer à collectionner vos tampons de voyage."
-              : "Connectez votre wallet MetaMask pour débloquer votre passeport de voyage et commencer à collectionner vos tampons."
-            }
+              : "Connectez votre wallet MetaMask pour débloquer votre passeport de voyage et commencer à collectionner vos tampons."}
           </p>
         </div>
 
         {/* Afficher les quêtes seulement si connecté */}
         {isConnected && (
-          <QuestList onStartQuest={handleStartQuest} onOpenPassport={handleOpenPassport} />
+          <QuestList
+            onStartQuest={handleStartQuest}
+            onOpenPassport={handleOpenPassport}
+          />
         )}
       </div>
     </div>

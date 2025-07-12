@@ -1,10 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+body,
+.app-orbitron {
+  font-family: "Orbitron", sans-serif !important;
+}
+
 @layer base {
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Roboto", sans-serif;
     background: linear-gradient(135deg, #00050a 0%, #000103 100%);
     min-height: 100vh;
   }
@@ -14,7 +22,6 @@
   .passport-page {
     transform-style: preserve-3d;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    
   }
 
   .passport-page.flipping {
@@ -37,13 +44,18 @@
   }
 
   .stamp-slot::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
     transition: left 0.5s ease;
   }
 
@@ -63,7 +75,7 @@
   }
 
   .passport-cover::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -77,21 +89,21 @@
   }
 
   .reflection-fade-mask {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 120px;
-  pointer-events: none;
-  z-index: 46;
-  background: linear-gradient(
-    to left,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0) 25%,
-    rgba(0, 0, 0, 0) 75%,
-    rgba(0, 0, 0, 1) 100%
-  );
-}
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    pointer-events: none;
+    z-index: 46;
+    background: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) 25%,
+      rgba(0, 0, 0, 0) 75%,
+      rgba(0, 0, 0, 1) 100%
+    );
+  }
 
   @keyframes pageTurn {
     0% {
@@ -181,13 +193,16 @@
     position: relative;
     background: rgba(0, 0, 0, 0.02);
     mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
-    -webkit-mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(0, 0, 0, 0.4)
+    );
     height: 350px;
   }
   .coverflow-page:not(.center) .page-reflection {
     display: none;
   }
-
 
   /* Ajustement du reflet selon la position */
   .coverflow-page.center .page-reflection {
@@ -354,7 +369,7 @@
   }
 
   .page-click-zone::before {
-    content: '';
+    content: "";
     width: 0;
     height: 0;
     border-style: solid;
@@ -490,7 +505,7 @@
     font-size: 12px;
     font-weight: 600;
     color: #495057;
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", monospace;
   }
 
   .passport-vachette-connect-overlay {
@@ -546,7 +561,7 @@
 
   /* Styles pour les quêtes */
   .quest-container {
-   /* background: #313131;*/
+    /* background: #313131;*/
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     color: white;
@@ -600,7 +615,6 @@
     background: #718096;
     color: #e2e8f0;
   }
-
 }
 
 .coverflow-disabled {
@@ -617,4 +631,1483 @@
 
 .h-128 {
   height: 32rem;
+}
+
+/* ===== STYLES FUTURISTES ET CYBERPUNK ===== */
+
+/* Logo holographique */
+.holographic-logo-container {
+  position: relative;
+  display: inline-block;
+}
+
+.holographic-logo {
+  filter: drop-shadow(0 0 20px rgba(225, 0, 60, 0.6));
+  animation: holographicFloat 3s ease-in-out infinite;
+}
+
+.holographic-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    rgba(225, 0, 60, 0.3) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: holographicPulse 2s ease-in-out infinite;
+}
+
+@keyframes holographicFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes holographicPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Titre néon */
+.neon-title {
+  background: linear-gradient(45deg, #e1003c, #ff00bf, #e1003c);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: neonGlow 2s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(225, 0, 60, 0.8), 0 0 20px rgba(225, 0, 60, 0.6),
+    0 0 30px rgba(225, 0, 60, 0.4);
+}
+
+.neon-subtitle {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes neonGlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1.2);
+  }
+}
+
+/* Carte métallique */
+.metallic-card {
+  background: linear-gradient(
+    135deg,
+    rgba(40, 40, 40, 0.9) 0%,
+    rgba(60, 60, 60, 0.8) 50%,
+    rgba(40, 40, 40, 0.9) 100%
+  );
+  border: 1px solid rgba(225, 0, 60, 0.3);
+  border-radius: 15px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.metallic-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: metallicShine 3s ease-in-out infinite;
+}
+
+@keyframes metallicShine {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Bouton cyberpunk */
+.cyber-button-container {
+  position: relative;
+}
+
+.cyber-connect-button {
+  position: relative;
+  background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+  border: 2px solid #e1003c;
+  color: #ffffff;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+
+.cyber-button-text {
+  position: relative;
+  z-index: 2;
+}
+
+.cyber-button-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #e1003c, #ff00bf);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cyber-button-border {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #e1003c, #ff00bf, #e1003c);
+  border-radius: 7px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cyber-connect-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(225, 0, 60, 0.4), 0 0 20px rgba(225, 0, 60, 0.2);
+}
+
+.cyber-connect-button:hover .cyber-button-glow {
+  opacity: 0.3;
+}
+
+.cyber-connect-button:hover .cyber-button-border {
+  opacity: 1;
+}
+
+/* Compteur de tokens futuriste en cercle - correction centrage */
+.token-counter {
+  width: 160px;
+  height: 160px;
+  min-width: 160px;
+  min-height: 160px;
+  max-width: 160px;
+  max-height: 160px;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 20, 0.95) 0%,
+    rgba(40, 40, 40, 0.85) 100%
+  );
+  border: 4px solid #e1003c;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28), 0 0 0 6px rgba(225, 0, 60, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 50;
+  padding: 0;
+  gap: 0.2rem;
+}
+
+.token-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.token-label {
+  font-size: 0.9rem;
+  color: #e0e0e0;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin: 0 0 0.2rem 0;
+  width: 100%;
+  line-height: 1.1;
+}
+
+.token-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff0077;
+  text-shadow: 0 0 16px rgba(225, 0, 60, 0.5);
+  line-height: 1.1;
+  margin: 0.2rem 0 0 0;
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .token-counter {
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
+    min-height: 90px;
+    max-width: 90px;
+    max-height: 90px;
+    padding: 0;
+  }
+  .token-value {
+    font-size: 1.2rem;
+  }
+  .token-label {
+    font-size: 0.7rem;
+  }
+}
+
+/* Section héro */
+.hero-section {
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+}
+
+.title-container {
+  margin-top: 2rem;
+}
+
+/* Section passeport 3D */
+.passport-section {
+  position: relative;
+}
+
+.passport-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.passport-3d-wrapper {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.passport-3d-wrapper:hover {
+  transform: rotateY(5deg) rotateX(5deg);
+}
+
+.passport-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 400px;
+  background: radial-gradient(
+    ellipse,
+    rgba(225, 0, 60, 0.1) 0%,
+    transparent 70%
+  );
+  border-radius: 20px;
+  animation: passportGlow 3s ease-in-out infinite;
+}
+
+@keyframes passportGlow {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* Section des actions */
+.actions-section {
+  margin-top: 3rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cyber-action-button {
+  position: relative;
+  background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+  border: 2px solid;
+  color: #ffffff;
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  min-width: 200px;
+}
+
+.cyber-action-button.primary {
+  border-color: #e1003c;
+}
+
+.cyber-action-button.secondary {
+  border-color: #ff00bf;
+}
+
+.button-text {
+  position: relative;
+  z-index: 2;
+}
+
+.button-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cyber-action-button.primary .button-glow {
+  background: linear-gradient(45deg, #e1003c, #ff00bf);
+}
+
+.cyber-action-button.secondary .button-glow {
+  background: linear-gradient(45deg, #ff00bf, #e1003c);
+}
+
+.button-border {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 7px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cyber-action-button.primary .button-border {
+  background: linear-gradient(45deg, #e1003c, #ff00bf, #e1003c);
+}
+
+.cyber-action-button.secondary .button-border {
+  background: linear-gradient(45deg, #ff00bf, #e1003c, #ff00bf);
+}
+
+.cyber-action-button:hover {
+  transform: translateY(-2px);
+}
+
+.cyber-action-button.primary:hover {
+  box-shadow: 0 10px 30px rgba(225, 0, 60, 0.4), 0 0 20px rgba(225, 0, 60, 0.2);
+}
+
+.cyber-action-button.secondary:hover {
+  box-shadow: 0 10px 30px rgba(255, 0, 191, 0.4),
+    0 0 20px rgba(255, 0, 191, 0.2);
+}
+
+.cyber-action-button:hover .button-glow {
+  opacity: 0.3;
+}
+
+.cyber-action-button:hover .button-border {
+  opacity: 1;
+}
+
+/* Footer avec stats */
+.stats-footer {
+  margin-top: 4rem;
+}
+
+.stats-grid {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 20, 0.8) 0%,
+    rgba(40, 40, 40, 0.6) 100%
+  );
+  border: 1px solid rgba(225, 0, 60, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #e1003c;
+  text-shadow: 0 0 15px rgba(225, 0, 60, 0.6);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #888;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .neon-title {
+    font-size: 2.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cyber-action-button {
+    min-width: 250px;
+  }
+
+  .stats-grid {
+    gap: 1.5rem;
+  }
+
+  .stat-item {
+    padding: 1rem 1.5rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .neon-title {
+    font-size: 2rem;
+  }
+
+  .holographic-logo {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .cyber-action-button {
+    min-width: 200px;
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+/* ===== PASSEPORT 3D RÉALISTE ===== */
+
+.passport-3d-container {
+  position: relative;
+  width: 400px;
+  height: 280px;
+  perspective: 1500px;
+  margin: 3rem auto;
+  cursor: pointer;
+}
+
+.passport-3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotateY(0deg);
+}
+
+.passport-3d.passport-open {
+  transform: rotateY(-180deg);
+}
+
+/* Couverture avant */
+.passport-cover-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    #1a1a1a 0%,
+    #2a2a2a 25%,
+    #3a3a3a 50%,
+    #2a2a2a 75%,
+    #1a1a1a 100%
+  );
+  border-radius: 8px;
+  border: 2px solid #e1003c;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 20px rgba(225, 0, 60, 0.3);
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Logo */
+.passport-logo {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(225, 0, 60, 0.8));
+}
+
+.logo-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(
+    circle,
+    rgba(225, 0, 60, 0.4) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: logoPulse 2s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Titre */
+.passport-title {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.passport-title h1 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, #e1003c, #ff00bf, #e1003c);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: titleGlow 3s ease-in-out infinite;
+  text-shadow: 0 0 15px rgba(225, 0, 60, 0.6);
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+.passport-title p {
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@keyframes titleGlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Chip électronique */
+.electronic-chip {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 35px;
+  height: 25px;
+  background: linear-gradient(135deg, #333, #555);
+  border-radius: 4px;
+  border: 1px solid #e1003c;
+  overflow: hidden;
+}
+
+.chip-pattern {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 12px;
+  background: linear-gradient(90deg, #e1003c 1px, transparent 1px) 0 0 / 3px 3px,
+    linear-gradient(0deg, #e1003c 1px, transparent 1px) 0 0 / 3px 3px;
+  opacity: 0.6;
+}
+
+.chip-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(225, 0, 60, 0.3) 0%,
+    transparent 70%
+  );
+  animation: chipPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes chipPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Bordure métallique */
+.metallic-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.1) 75%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: metallicShine 4s ease-in-out infinite;
+}
+
+@keyframes metallicShine {
+  0% {
+    transform: translateX(-100%) translateY(-100%);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%);
+  }
+}
+
+/* Pages intérieures */
+.passport-pages {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.page-content {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.page-header h2 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #e1003c;
+  margin-bottom: 5px;
+}
+
+.page-header p {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 600;
+}
+
+.page-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Section d'informations */
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.info-item .label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.info-item .value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.info-item .value.active {
+  color: #e1003c;
+  text-shadow: 0 0 5px rgba(225, 0, 60, 0.3);
+}
+
+/* Section des tampons */
+.stamps-section {
+  text-align: center;
+}
+
+.stamps-section h3 {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #e1003c;
+  margin-bottom: 20px;
+}
+
+.stamps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.stamp-slot {
+  width: 50px;
+  height: 50px;
+  border: 2px dashed #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.stamp-slot.empty {
+  background: rgba(225, 0, 60, 0.1);
+  border-color: #e1003c;
+}
+
+.stamp-slot:hover {
+  transform: scale(1.1);
+  box-shadow: 0 5px 15px rgba(225, 0, 60, 0.3);
+}
+
+/* Section QR */
+.qr-section {
+  text-align: center;
+}
+
+.qr-code {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 15px;
+  background: #333;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.qr-pattern {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(90deg, #fff 1px, transparent 1px) 0 0 / 4px 4px,
+    linear-gradient(0deg, #fff 1px, transparent 1px) 0 0 / 4px 4px;
+  opacity: 0.8;
+}
+
+.qr-section p {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 600;
+}
+
+/* Couverture arrière */
+.passport-cover-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  border-radius: 8px;
+  border: 2px solid #ff00bf;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.back-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 0, 191, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(225, 0, 60, 0.1) 0%,
+      transparent 50%
+    );
+  animation: backPatternFloat 6s ease-in-out infinite;
+}
+
+@keyframes backPatternFloat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.back-logo {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ff00bf;
+  text-shadow: 0 0 15px rgba(255, 0, 191, 0.6);
+  letter-spacing: 3px;
+  z-index: 2;
+}
+
+.back-serial {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-top: 10px;
+  z-index: 2;
+}
+
+/* Tranche du passeport */
+.passport-spine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 15px;
+  height: 100%;
+  background: linear-gradient(90deg, #333 0%, #555 50%, #333 100%);
+  transform: translateX(-50%) rotateY(90deg);
+  border-radius: 7px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 0 10px rgba(225, 0, 60, 0.3);
+}
+
+.spine-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(225, 0, 60, 0.3) 2px,
+    rgba(225, 0, 60, 0.3) 4px
+  );
+  animation: spineScan 3s linear infinite;
+}
+
+@keyframes spineScan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Effets de lumière */
+.passport-lighting {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.light-source {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 100px;
+  background: radial-gradient(
+    ellipse,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  animation: lightFloat 4s ease-in-out infinite;
+}
+
+@keyframes lightFloat {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+.ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(
+    ellipse,
+    rgba(225, 0, 60, 0.05) 0%,
+    transparent 70%
+  );
+  border-radius: 15px;
+  animation: ambientGlow 4s ease-in-out infinite;
+}
+
+@keyframes ambientGlow {
+  0%,
+  100% {
+    opacity: 0.05;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* Bouton d'ouverture */
+.open-button {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(45deg, #e1003c, #ff00bf);
+  border: none;
+  color: white;
+  padding: 0.75rem 2rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(225, 0, 60, 0.4), 0 0 15px rgba(225, 0, 60, 0.2);
+  overflow: hidden;
+}
+
+.open-button:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(225, 0, 60, 0.6), 0 0 20px rgba(225, 0, 60, 0.4);
+}
+
+.button-glow {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: buttonShine 2s ease-in-out infinite;
+}
+
+@keyframes buttonShine {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Effets de survol */
+.passport-3d-container:hover .passport-3d {
+  transform: rotateY(-5deg) rotateX(5deg);
+}
+
+.passport-3d-container:hover .ambient-glow {
+  opacity: 0.2;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .passport-3d-container {
+    width: 320px;
+    height: 220px;
+  }
+
+  .passport-title h1 {
+    font-size: 1.4rem;
+  }
+
+  .passport-title p {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .passport-3d-container {
+    width: 280px;
+    height: 190px;
+  }
+
+  .passport-title h1 {
+    font-size: 1.2rem;
+  }
+
+  .passport-logo {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ===== PASSEPORT VACHETTE FUTURISTE ===== */
+
+.futuristic-vachette-bg {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    #1a1a1a 0%,
+    #2a2a2a 25%,
+    #3a3a3a 50%,
+    #2a2a2a 75%,
+    #1a1a1a 100%
+  );
+  border-radius: 15px;
+  border: 2px solid #e1003c;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 30px rgba(225, 0, 60, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vachette-logo {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, #e1003c, #ff00bf, #e1003c);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: vachetteGlow 3s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(225, 0, 60, 0.6);
+  letter-spacing: 3px;
+  z-index: 2;
+}
+
+.vachette-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 0, 191, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(225, 0, 60, 0.1) 0%,
+      transparent 50%
+    );
+  animation: vachettePatternFloat 6s ease-in-out infinite;
+}
+
+@keyframes vachetteGlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes vachettePatternFloat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ===== Effet Passeport CodePen ===== */
+.passport-effect-card {
+  width: 260px;
+  height: 360px;
+  border-radius: 16px;
+  margin: 3rem auto;
+  background: linear-gradient(135deg, #232326 0%, #3a3a3e 100%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18),
+    0 1.5px 0.5px 0 rgba(255, 0, 191, 0.1), 0 0 0 2px #ff0077;
+  border: 1.5px solid #ff0077;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+
+.passport-effect-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  pointer-events: none;
+  background: radial-gradient(
+      600px circle at var(--x, 130px) var(--y, 180px),
+      rgba(255, 0, 191, 0.18) 0%,
+      transparent 80%
+    ),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
+    linear-gradient(60deg, rgba(255, 0, 191, 0.08) 0%, transparent 80%);
+  transition: background 0.2s;
+  z-index: 2;
+}
+
+.passport-effect-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  pointer-events: none;
+  background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 60%
+    ),
+    linear-gradient(60deg, rgba(255, 0, 191, 0.05) 0%, transparent 80%);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .passport-effect-card {
+    width: 90vw;
+    height: 220px;
+  }
+}
+
+/* FAN PASS - TITRE XXL AVEC DÉGRADÉ ET NÉON */
+.fanpass-title {
+  font-size: 6rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  background: linear-gradient(90deg, #ff0077 0%, #e1003c 40%, #fff 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fanpassNeon 2.5s ease-in-out infinite;
+  margin-bottom: 0.5em;
+  margin-top: 6rem;
+}
+
+.fanpass-title {
+  margin-top: -1.5rem;
+}
+
+@keyframes fanpassNeon {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    filter: brightness(1.1);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1.3);
+  }
+}
+
+/* SLOGAN - EFFET CHROME/ARGENTÉ, PLUS GROS, MODERNE */
+.fanpass-slogan {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: linear-gradient(90deg, #e0e0e0 0%, #b0b0b0 40%, #fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.25),
+    0 1px 8px rgba(0, 0, 0, 0.1);
+  animation: fanpassSlogan 2.5s ease-in-out infinite;
+  margin-bottom: 1.5em;
+}
+
+.fanpass-slogan-main {
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.2em;
+}
+
+@media (max-width: 600px) {
+  .fanpass-title {
+    font-size: 2.2rem;
+  }
+  .fanpass-slogan {
+    font-size: 1.1rem;
+  }
+}
+
+/* FAN PASS vertical à gauche */
+.fanpass-title-vertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: "Orbitron", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: 0.73em;
+  color: #ff007a;
+  text-shadow: 0 0 18px #ff007a99, 0 2px 0 #000;
+  user-select: none;
+  padding: 0;
+  margin-bottom: 4rem;
+}
+
+.vertical-title-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  min-height: 400px;
+}
+
+/* Stats verticales à droite */
+.vertical-stats-container {
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-right: 18px;
+}
+
+.stat-item-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 140px;
+  padding: 0.5rem 2.1rem 0.5rem 0.8rem;
+  background: rgba(20, 20, 20, 0.7);
+  border-radius: 1.2rem;
+  border: 1.5px solid #ff007a44;
+  box-shadow: 0 2px 16px #ff007a22;
+}
+
+.stat-value-vertical {
+  font-family: "Orbitron", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #ff007a;
+  text-shadow: 0 0 10px #ff007a99, 0 2px 0 #000;
+  margin-bottom: 0.2rem;
+}
+
+.stat-label-vertical {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  text-align: right;
+  white-space: pre-line;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+  margin-right: 0;
+}
+
+/* Passeport centré et responsive */
+.passport-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+}
+
+.stats-block-container {
+  margin-top: 10.5rem;
+  margin-right: 4.5rem;
+  transition: margin 0.3s;
+}
+
+@media (max-width: 1100px) {
+  .vertical-title-container,
+  .vertical-stats-container {
+    min-height: 300px;
+  }
+  .fanpass-title-vertical {
+    font-size: 2.2rem;
+  }
+  .stat-value-vertical {
+    font-size: 1.5rem;
+  }
+  .vertical-stats-container {
+    margin-right: 6px;
+  }
+  .stat-item-vertical {
+    min-width: 100px;
+    padding-right: 0.7rem;
+  }
+  .stats-block-container {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .vertical-title-container,
+  .vertical-stats-container {
+    display: none;
+  }
+  .passport-section {
+    min-height: 320px;
+  }
+  .stat-item-vertical {
+    align-items: center;
+    padding-right: 0.7rem;
+    padding-left: 0.7rem;
+    min-width: 100px;
+  }
+  .stat-label-vertical {
+    text-align: center;
+  }
+}
+
+/* Centrage vertical général */
+html,
+body,
+#root {
+  height: 100%;
 }

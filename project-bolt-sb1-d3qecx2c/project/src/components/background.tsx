@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 const ParticlesBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -7,20 +7,20 @@ const ParticlesBackground: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const resizeCanvas = () => {
       const rect = canvas.getBoundingClientRect();
       canvas.width = rect.width * window.devicePixelRatio;
       canvas.height = rect.height * window.devicePixelRatio;
-      canvas.style.width = rect.width + 'px';
-      canvas.style.height = rect.height + 'px';
+      canvas.style.width = rect.width + "px";
+      canvas.style.height = rect.height + "px";
       ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
     const particles: Array<{
       x: number;
@@ -33,7 +33,11 @@ const ParticlesBackground: React.FC = () => {
       pulse: number;
     }> = [];
 
-    const colors = ['rgba(225, 0, 60, 0.4)', 'rgba(255, 0, 191, 0.3)', 'rgba(241, 242, 242, 0.3)'];
+    const colors = [
+      "rgba(225, 0, 60, 0.4)",
+      "rgba(255, 0, 191, 0.3)",
+      "rgba(241, 242, 242, 0.3)",
+    ];
 
     // Create particles
     const rect = canvas.getBoundingClientRect();
@@ -46,7 +50,7 @@ const ParticlesBackground: React.FC = () => {
         size: Math.random() * 2 + 0.5,
         opacity: Math.random() * 0.4 + 0.1,
         color: colors[Math.floor(Math.random() * colors.length)],
-        pulse: Math.random() * Math.PI * 2
+        pulse: Math.random() * Math.PI * 2,
       });
     }
 
@@ -74,20 +78,24 @@ const ParticlesBackground: React.FC = () => {
         // Draw particle with glow effect
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, currentSize, 0, Math.PI * 2);
-        
+
         // Glow effect
         const gradient = ctx.createRadialGradient(
-          particle.x, particle.y, 0,
-          particle.x, particle.y, currentSize * 2
+          particle.x,
+          particle.y,
+          0,
+          particle.x,
+          particle.y,
+          currentSize * 2
         );
         gradient.addColorStop(0, particle.color);
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        
+        gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+
         ctx.fillStyle = gradient;
         ctx.fill();
 
         // Draw connections with enhanced effects
-        particles.slice(index + 1).forEach(otherParticle => {
+        particles.slice(index + 1).forEach((otherParticle) => {
           const dx = particle.x - otherParticle.x;
           const dy = particle.y - otherParticle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
@@ -96,15 +104,17 @@ const ParticlesBackground: React.FC = () => {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            
+
             const connectionOpacity = (1 - distance / 150) * 0.35;
             const gradient = ctx.createLinearGradient(
-              particle.x, particle.y,
-              otherParticle.x, otherParticle.y
+              particle.x,
+              particle.y,
+              otherParticle.x,
+              otherParticle.y
             );
             gradient.addColorStop(0, `rgba(225, 0, 60, ${connectionOpacity})`);
             gradient.addColorStop(1, `rgba(255, 0, 191, ${connectionOpacity})`);
-            
+
             ctx.strokeStyle = gradient;
             ctx.lineWidth = 2;
             ctx.stroke();
@@ -118,7 +128,7 @@ const ParticlesBackground: React.FC = () => {
     animate();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener("resize", resizeCanvas);
     };
   }, []);
 
