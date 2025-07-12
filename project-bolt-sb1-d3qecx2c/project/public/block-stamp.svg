@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <!-- Cercle principal -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#999999" stroke-width="8"/>
+  <circle cx="100" cy="100" r="75" fill="none" stroke="#999999" stroke-width="4"/>
+  
+  <!-- Étoiles -->
+  <polygon points="100,30 105,45 120,45 108,55 113,70 100,60 87,70 92,55 80,45 95,45" fill="#999999"/>
+  <polygon points="60,50 63,58 72,58 66,63 69,71 60,67 51,71 54,63 48,58 57,58" fill="#999999"/>
+  <polygon points="140,50 143,58 152,58 146,63 149,71 140,67 131,71 134,63 128,58 137,58" fill="#999999"/>
+  <polygon points="60,150 63,158 72,158 66,163 69,171 60,167 51,171 54,163 48,158 57,158" fill="#999999"/>
+  <polygon points="140,150 143,158 152,158 146,163 149,171 140,167 131,171 134,163 128,158 137,158" fill="#999999"/>
+  
+  <!-- Rectangle BLOCK -->
+  <rect x="30" y="85" width="140" height="30" fill="#999999" rx="5"/>
+  <text x="100" y="105" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">BLOCK</text>
+</svg>

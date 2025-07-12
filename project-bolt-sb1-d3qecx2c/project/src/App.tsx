@@ -20,8 +20,6 @@ interface Stamp {
   image?: string;
 }
 
-export default App;
-
 interface Quest {
   id: string;
   title: string;
@@ -44,6 +42,11 @@ function App() {
   const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
   const [showStampPopup, setShowStampPopup] = useState(false);
   const [newStampData, setNewStampData] = useState<Quest | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  
+  const { isAnimating, startAnimation } = usePassportAnimation();
+  const { completeQuest, getCompletedQuests } = useQuests();
+  
   const [fanTokens, setFanTokens] = useState(10); // compteur de fan tokens
 
   const { isAnimating, startAnimation } = usePassportAnimation();
@@ -128,7 +131,7 @@ function App() {
     // Pour le MVP, on désactive l'ajout manuel de tampons
     console.log('Ajout de tampon désactivé - utilisez les quêtes');
   };
-
+  
   const handleMetaMaskConnect = async () => {
     await connectWallet();
     // Les NFTs seront récupérés automatiquement via useEffect ci-dessous
@@ -413,7 +416,6 @@ function App() {
           </h1>
           <p className="text-white max-w-md drop-shadow-md">
             {isConnected 
-              ? "Découvrez votre passeport interactif. Cliquez sur la couverture pour l'ouvrir et commencez à collectionner vos tampons de voyage."
               : "Connectez votre wallet MetaMask pour débloquer votre passeport de voyage et commencer à collectionner vos tampons."
             }
           </p>
@@ -431,3 +433,5 @@ function App() {
     </div>
   );
 }
+
+export default App;
