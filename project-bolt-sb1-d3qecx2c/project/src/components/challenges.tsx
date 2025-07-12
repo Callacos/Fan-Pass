@@ -203,7 +203,7 @@ const Challenges: React.FC<ChallengesProps> = ({ onBackToMenu, onOpenCollection 
             strength={0.25}
             distance={100}
           >
-            Menu
+            Home
           </MagnetButton>
           <MagnetButton
             onClick={onOpenCollection || (() => console.log('Ouvrir collection'))}

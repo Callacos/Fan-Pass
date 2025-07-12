@@ -294,7 +294,7 @@ function App() {
                   strength={0.25}
                   distance={100}
                 >
-                  Menu
+                  Home
                 </MagnetButton>
                 <MagnetButton
                   onClick={handleOpenQuests}
@@ -338,7 +338,7 @@ function App() {
                 strength={0.25}
                 distance={100}
               >
-                Menu
+                Home
               </MagnetButton>
               <MagnetButton
                 onClick={handleOpenQuests}
