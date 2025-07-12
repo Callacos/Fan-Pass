@@ -13,6 +13,7 @@ interface PassportPageProps {
   pageNumber: number;
   stamps: Stamp[];
   onAddStamp: (slotIndex: number, stamp: Stamp) => void;
+  onStampClick?: (stamp: Stamp) => void;
   onPrevious?: () => void;
   onNext?: () => void;
   isCurrentPage?: boolean;
@@ -22,6 +23,7 @@ const PassportPage: React.FC<PassportPageProps> = ({
   pageNumber,
   stamps,
   onAddStamp,
+  onStampClick,
   onPrevious,
   onNext,
   isCurrentPage = false
@@ -61,8 +63,15 @@ const PassportPage: React.FC<PassportPageProps> = ({
     }
   ];
 
-  const handleSlotClick = (slotIndex: number) => {
-    if (stamps[slotIndex]) return;
+  const handleSlotClick = (slotIndex: number, event: React.MouseEvent) => {
+    // Empêcher la propagation de l'événement pour éviter de déclencher la navigation
+    event.stopPropagation();
+    
+    // Si le tampon existe, ouvrir le popup
+    if (stamps[slotIndex]) {
+      onStampClick?.(stamps[slotIndex]);
+      return;
+    }
 
     const randomStamp = stampTemplates[Math.floor(Math.random() * stampTemplates.length)];
     const newStamp: Stamp = {
@@ -132,12 +141,12 @@ const PassportPage: React.FC<PassportPageProps> = ({
             return (
               <div
                 key={slotIndex}
-                className={`stamp-slot-round rounded-full border-4 border-dashed border-gray-400 cursor-pointer transition-all duration-300 flex items-center justify-center ${getOffsetClass(slotIndex)} ${getMarginClass(slotIndex)} ${
+                className={`stamp-slot-round rounded-full border-4 border-dashed border-gray-400 cursor-pointer transition-all duration-300 flex items-center justify-center relative z-10 ${getOffsetClass(slotIndex)} ${getMarginClass(slotIndex)} ${
                   slotIndex === 1 ? 'w-44 h-44' : 'w-32 h-32'
                 } ${
-                  stamps[slotIndex] ? 'bg-white border-solid shadow-lg' : 'hover:border-red-500 hover:bg-red-50'
+                  stamps[slotIndex] ? 'bg-white border-solid shadow-lg hover:shadow-xl hover:scale-105' : 'hover:border-red-500 hover:bg-red-50'
                 } ${selectedSlot === slotIndex ? 'animate-pulse border-red-500 scale-110' : ''}`}
-                onClick={() => handleSlotClick(slotIndex)}
+                onClick={(event) => handleSlotClick(slotIndex, event)}
               >
               {stamps[slotIndex] ? (
                 <div className={`relative w-full h-full transform transition-all duration-500 ${
