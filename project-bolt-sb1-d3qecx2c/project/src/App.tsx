@@ -8,6 +8,7 @@ import StampPopup from './components/StampPopup';
 import ParticlesBackground from './components/background';
 import { usePassportAnimation } from './hooks/usePassportAnimation';
 import { useQuests } from './hooks/useQuests';
+import { useWeb3 } from './hooks/useWeb3';
 import ShinyText from './components/ShinyText';
 
 interface Stamp {
@@ -18,6 +19,8 @@ interface Stamp {
   color?: string;
   image?: string;
 }
+
+export default App;
 
 interface Quest {
   id: string;
@@ -35,18 +38,33 @@ interface Quest {
 }
 
 function App() {
-  const [view, setView] = useState<'menu' | 'passport' | 'upload'>('menu');
+  const [view, setView] = useState<'menu' | 'passport' | 'upload' | 'quests'>('menu');
   const [isPassportOpen, setIsPassportOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
   const [showStampPopup, setShowStampPopup] = useState(false);
   const [newStampData, setNewStampData] = useState<Quest | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
-  
+  const [fanTokens, setFanTokens] = useState(10); // compteur de fan tokens
+
   const { isAnimating, startAnimation } = usePassportAnimation();
   const { completeQuest, getCompletedQuests } = useQuests();
-  
-  const totalPages = 8;
+  const {
+    connectWallet,
+    isConnecting,
+    userAddress,
+    nfts,
+    fetchUserNFTs,
+    mintNftForUser,
+    nftContract,
+    provider,
+    signer,
+    error: web3Error,
+  } = useWeb3();
+
+  const isConnected = !!userAddress;
+
+  // 10 tokens = 10 pages, 20 tokens = 20 pages, etc.
+  const totalPages = Math.max(1, Math.floor(fanTokens));
 
   // Vérifier les nouveaux tampons débloqués quand on change de page
   useEffect(() => {
@@ -65,8 +83,18 @@ function App() {
     setView('upload');
   };
 
+  const handleOpenQuests = () => {
+    setView('quests');
+  };
+
+  const handleBackToMenuFromQuests = () => {
+    setView('menu');
+  };
+
   const handlePhotoSubmit = (questId: string, imageData: string) => {
     completeQuest(questId, imageData);
+    // Mint automatique du NFT correspondant à la quête
+    mintNftForUser(questId);
     setSelectedQuest(null);
     setView('menu');
   };
@@ -101,12 +129,16 @@ function App() {
     console.log('Ajout de tampon désactivé - utilisez les quêtes');
   };
 
-  const handleMetaMaskConnect = () => {
-    // Simulation de connexion MetaMask
-    setIsConnected(true);
-    console.log('Connexion MetaMask réussie');
-    // Ici, vous pourriez ajouter la vraie logique de connexion MetaMask
+  const handleMetaMaskConnect = async () => {
+    await connectWallet();
+    // Les NFTs seront récupérés automatiquement via useEffect ci-dessous
   };
+  // Récupérer les NFTs dès qu'on est connecté ou que le contrat change
+  useEffect(() => {
+    if (userAddress && nftContract) {
+      fetchUserNFTs();
+    }
+  }, [userAddress, nftContract]);
 
   // Nouvelle fonction pour gérer le clic sur les pages adjacentes
   const handlePageClick = (pageIndex: number) => {
@@ -119,32 +151,27 @@ function App() {
     }
   };
 
-  // Générer les tampons basés sur les quêtes complétées
+  // Générer les tampons à partir des NFTs récupérés (3 par page)
   const generateStampsForPage = (pageNumber: number): Stamp[] => {
-    const completedQuests = getCompletedQuests();
-    
-    // Calculer combien de tampons ont été placés avant cette page
     const slotsPerPage = 3;
     const startIndex = (pageNumber - 1) * slotsPerPage;
     const endIndex = startIndex + slotsPerPage;
-    
-    // Prendre les quêtes pour cette page spécifique
-    const questsForThisPage = completedQuests.slice(startIndex, endIndex);
-    
-    // Convertir en tampons et compléter avec des slots vides
+    // Log pour debug : voir les NFTs récupérés
+    console.log('NFTs récupérés:', nfts);
+    const nftsForPage = nfts.slice(startIndex, endIndex);
     const stamps: Stamp[] = [];
     for (let i = 0; i < slotsPerPage; i++) {
-      if (questsForThisPage[i]) {
+      if (nftsForPage[i]) {
         stamps.push({
-          id: questsForThisPage[i].id,
-          country: questsForThisPage[i].stampData.country,
-          date: questsForThisPage[i].stampData.date,
-          type: questsForThisPage[i].stampData.type,
-          color: questsForThisPage[i].stampData.color
+          id: nftsForPage[i].tokenId,
+          country: nftsForPage[i].name || '',
+          date: '',
+          type: nftsForPage[i].description || '',
+          color: '',
+          image: nftsForPage[i].image
         });
       }
     }
-    
     return stamps;
   };
 
@@ -154,30 +181,8 @@ function App() {
     return Math.floor(questIndex / slotsPerPage) + 1;
   };
 
-  // Fonction pour vérifier si une nouvelle quête a été ajoutée sur la page actuelle
-  const checkForNewStampsOnCurrentPage = () => {
-    const completedQuests = getCompletedQuests();
-    
-    // Trouver la dernière quête complétée
-    if (completedQuests.length > 0) {
-      const lastQuestIndex = completedQuests.length - 1;
-      const pageWithNewStamp = getPageForQuest(lastQuestIndex);
-      
-      // Si la nouvelle quête est sur la page actuelle, déclencher le popup
-      if (pageWithNewStamp === currentPage + 1) {
-        const lastQuest = completedQuests[lastQuestIndex];
-        const questId = lastQuest.id;
-        const shownStamps = JSON.parse(localStorage.getItem('shownStamps') || '[]');
-        
-        if (!shownStamps.includes(questId)) {
-          setNewStampData(lastQuest);
-          setShowStampPopup(true);
-          shownStamps.push(questId);
-          localStorage.setItem('shownStamps', JSON.stringify(shownStamps));
-        }
-      }
-    }
-  };
+  // Désactiver le popup de nouveau tampon pour la version NFT (à réimplémenter si besoin)
+  const checkForNewStampsOnCurrentPage = () => {};
 
   const getCoverFlowClass = (pageIndex: number) => {
     const diff = pageIndex - currentPage;
@@ -221,7 +226,78 @@ function App() {
     );
   }
 
+  if (view === 'quests') {
+    if (!isConnected) {
+      return (
+        <div className="min-h-screen flex flex-col items-center justify-center p-8">
+          <button
+            onClick={handleBackToMenuFromQuests}
+            className="menu-button mb-8"
+          >
+            Menu
+          </button>
+          <div className="flex flex-col items-center">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connectez votre wallet MetaMask</h2>
+              <p className="text-white mb-4">Vous devez connecter votre wallet pour accéder aux quêtes.</p>
+              <button
+                onClick={handleMetaMaskConnect}
+                className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-6 rounded shadow-lg transition-colors"
+              >
+                Se connecter avec MetaMask
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-8">
+        <button
+          onClick={handleBackToMenuFromQuests}
+          className="menu-button mb-8"
+        >
+          Menu
+        </button>
+        <QuestList 
+          onStartQuest={handleStartQuest} 
+          onOpenPassport={handleOpenPassport}
+          onValidateQuest={mintNftForUser}
+        />
+      </div>
+    );
+  }
+
   if (view === 'passport' && isPassportOpen) {
+    // Si l'utilisateur n'est pas connecté, afficher le bouton de connexion MetaMask
+    if (!isConnected) {
+      return (
+        <div className="min-h-screen flex flex-col items-center justify-center p-8">
+          <button
+            onClick={handleBackToMenu}
+            className="menu-button mb-8"
+          >
+            Menu
+          </button>
+          <div className="flex flex-col items-center">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connectez votre wallet MetaMask</h2>
+              <p className="text-white mb-4">Vous devez connecter votre wallet pour accéder à votre passeport de voyage.</p>
+              {web3Error && (
+                <div className="text-red-400 font-bold mb-2">{web3Error}</div>
+              )}
+              <button
+                onClick={handleMetaMaskConnect}
+                className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-6 rounded shadow-lg transition-colors"
+              >
+                Se connecter avec MetaMask
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    // Si connecté, afficher les pages du passeport
     return (
       <div className="min-h-screen flex items-center justify-center p-8">
         <button
@@ -230,7 +306,6 @@ function App() {
         >
           Menu
         </button>
-        
         <div className="flex flex-col items-center">
           <div className="relative perspective-1000">
             <div className="coverflow-container">
@@ -268,7 +343,6 @@ function App() {
           </div>
         </div>
         <div className="reflection-fade-mask"></div>
-
         {/* Pop-up pour nouveau tampon */}
         {showStampPopup && newStampData && (
           <StampPopup
@@ -284,52 +358,76 @@ function App() {
   }
 
   // Vue par défaut : Menu principal avec couverture et quêtes
+  if (!isConnected) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-8">
+        <button
+          onClick={handleBackToMenuFromQuests}
+          className="menu-button mb-8"
+        >
+          Menu
+        </button>
+        <div className="flex flex-col items-center">
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Connectez votre wallet MetaMask</h2>
+            <p className="text-white mb-4">Vous devez connecter votre wallet pour accéder aux quêtes.</p>
+            {web3Error && (
+              <div className="text-red-400 font-bold mb-2">{web3Error}</div>
+            )}
+            <button
+              onClick={handleMetaMaskConnect}
+              className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-6 rounded shadow-lg transition-colors"
+            >
+              Se connecter avec MetaMask
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden">
+      {/* Compteur fan token en haut à gauche */}
+      <div className="absolute top-4 left-4 z-50 bg-white bg-opacity-80 rounded-lg px-4 py-2 shadow-lg flex items-center">
+        <span className="font-bold text-red-600 text-lg mr-2">Fan tokens :</span>
+        <span className="font-mono text-xl">{fanTokens}</span>
+      </div>
       {/* Fond de particules animées */}
       <ParticlesBackground />
-      
       <div className="flex flex-col items-center" style={{ zIndex: 5 }}>
         {/* Titre au-dessus du passeport */}
         <div className="text-center mb-6 slide-in">
           <ShinyText text="TITRE" disabled={false} speed={3} className="mb-2" />
           <p className="text-white drop-shadow-lg ultimate-fan-text">The ultimate fan experience</p>
-          
         </div>
-        
         <div className="relative mb-12 my-12">
           <div className="slide-in">
-            {/* Afficher le passeport selon l'état de connexion */}
-            {isConnected ? (
-              <PassportCover isOpen={false} onOpen={handleOpenPassport} />
-            ) : (
-              <PassportVachette 
-                onConnect={handleMetaMaskConnect}
-                onOpen={handleOpenPassport}
-              />
-            )}
+            {/* Afficher le passeport */}
+            <PassportCover isOpen={false} onOpen={handleOpenPassport} />
           </div>
         </div>
-        
         <div className="text-center mb-8 slide-in">
           <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
             Passeport de Voyage
           </h1>
           <p className="text-white max-w-md drop-shadow-md">
             {isConnected 
-              ? "Découvrez votre passeport interactif. Cliquez sur la couverture pour l'ouvrir et commencer à collectionner vos tampons de voyage."
+              ? "Découvrez votre passeport interactif. Cliquez sur la couverture pour l'ouvrir et commencez à collectionner vos tampons de voyage."
               : "Connectez votre wallet MetaMask pour débloquer votre passeport de voyage et commencer à collectionner vos tampons."
             }
           </p>
         </div>
-
-        {/* Afficher les quêtes seulement si connecté */}
+        {/* Bouton pour accéder à la page des quêtes si connecté */}
         {isConnected && (
-          <QuestList onStartQuest={handleStartQuest} onOpenPassport={handleOpenPassport} />
+          <button
+            onClick={handleOpenQuests}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded shadow-lg mb-6 transition-colors"
+          >
+            Voir les quêtes
+          </button>
         )}
       </div>
     </div>
   );
 }
-
-export default App;
