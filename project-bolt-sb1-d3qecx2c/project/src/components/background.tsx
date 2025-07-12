@@ -11,8 +11,12 @@ const ParticlesBackground: React.FC = () => {
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     };
 
     resizeCanvas();
@@ -32,10 +36,11 @@ const ParticlesBackground: React.FC = () => {
     const colors = ['rgba(225, 0, 60, 0.4)', 'rgba(255, 0, 191, 0.3)', 'rgba(241, 242, 242, 0.3)'];
 
     // Create particles
-    for (let i = 0; i < 120; i++) {
+    const rect = canvas.getBoundingClientRect();
+    for (let i = 0; i < 300; i++) {
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+        x: Math.random() * rect.width,
+        y: Math.random() * rect.height,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
         size: Math.random() * 2 + 0.5,
@@ -58,8 +63,9 @@ const ParticlesBackground: React.FC = () => {
         particle.pulse += 0.02;
 
         // Bounce off edges
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        const rect = canvas.getBoundingClientRect();
+        if (particle.x < 0 || particle.x > rect.width) particle.vx *= -1;
+        if (particle.y < 0 || particle.y > rect.height) particle.vy *= -1;
 
         // Pulsing effect
         const pulseFactor = Math.sin(particle.pulse) * 0.3 + 1;
@@ -91,7 +97,7 @@ const ParticlesBackground: React.FC = () => {
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
             
-            const connectionOpacity = (1 - distance / 150) * 0.2;
+            const connectionOpacity = (1 - distance / 150) * 0.35;
             const gradient = ctx.createLinearGradient(
               particle.x, particle.y,
               otherParticle.x, otherParticle.y
@@ -100,7 +106,7 @@ const ParticlesBackground: React.FC = () => {
             gradient.addColorStop(1, `rgba(255, 0, 191, ${connectionOpacity})`);
             
             ctx.strokeStyle = gradient;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 2;
             ctx.stroke();
           }
         });
@@ -120,7 +126,7 @@ const ParticlesBackground: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: 1 }}
+      style={{ zIndex: 0 }}
     />
   );
 };

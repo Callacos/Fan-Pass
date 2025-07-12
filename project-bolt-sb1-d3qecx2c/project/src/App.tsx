@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PassportCover from './components/PassportCover';
 import PassportVachette from './components/PassportVachette';
 import PassportPage from './components/PassportPage';
-import QuestList from './components/QuestList';
+import Challenges from './components/challenges';
 import PhotoUpload from './components/PhotoUpload';
 import StampPopup from './components/StampPopup';
 import ParticlesBackground from './components/background';
@@ -42,15 +42,12 @@ function App() {
   const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
   const [showStampPopup, setShowStampPopup] = useState(false);
   const [newStampData, setNewStampData] = useState<Quest | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
   
   const { isAnimating, startAnimation } = usePassportAnimation();
   const { completeQuest, getCompletedQuests } = useQuests();
   
   const [fanTokens, setFanTokens] = useState(10); // compteur de fan tokens
-
-  const { isAnimating, startAnimation } = usePassportAnimation();
-  const { completeQuest, getCompletedQuests } = useQuests();
+ 
   const {
     connectWallet,
     isConnecting,
@@ -262,11 +259,7 @@ function App() {
         >
           Menu
         </button>
-        <QuestList 
-          onStartQuest={handleStartQuest} 
-          onOpenPassport={handleOpenPassport}
-          onValidateQuest={mintNftForUser}
-        />
+        <Challenges />
       </div>
     );
   }
@@ -416,7 +409,7 @@ function App() {
           </h1>
           <p className="text-white max-w-md drop-shadow-md">
             {isConnected 
-              : "Connectez votre wallet MetaMask pour débloquer votre passeport de voyage et commencer à collectionner vos tampons."
+              && "Connectez votre wallet MetaMask pour débloquer votre passeport de voyage et commencer à collectionner vos tampons."
             }
           </p>
         </div>
