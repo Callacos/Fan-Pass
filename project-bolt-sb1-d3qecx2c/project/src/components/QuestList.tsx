@@ -19,9 +19,10 @@ interface Quest {
 interface QuestListProps {
   onStartQuest: (quest: Quest) => void;
   onOpenPassport: () => void;
+  onValidateQuest: (questId: string) => void;
 }
 
-const QuestList: React.FC<QuestListProps> = ({ onStartQuest, onOpenPassport }) => {
+const QuestList: React.FC<QuestListProps> = ({ onStartQuest, onOpenPassport, onValidateQuest }) => {
   const [quests, setQuests] = useState<Quest[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -150,18 +151,29 @@ const QuestList: React.FC<QuestListProps> = ({ onStartQuest, onOpenPassport }) =
                     {quest.stampData.country}
                   </span>
                 </div>
-                <button
-                  onClick={() => handleStartQuest(quest)}
-                  disabled={quest.completed}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
-                    quest.completed
-                      ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                      : 'bg-red-600 text-white hover:bg-red-700 transform hover:scale-105'
-                  }`}
-                >
-                  <Camera className="w-4 h-4" />
-                  {quest.completed ? 'Terminée' : 'Réalisé'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleStartQuest(quest)}
+                    disabled={quest.completed}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
+                      quest.completed
+                        ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                        : 'bg-red-600 text-white hover:bg-red-700 transform hover:scale-105'
+                    }`}
+                  >
+                    <Camera className="w-4 h-4" />
+                    {quest.completed ? 'Terminée' : 'Réalisé'}
+                  </button>
+                  {!quest.completed && (
+                    <button
+                      onClick={() => onValidateQuest(quest.id)}
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-all duration-300"
+                    >
+                      <CheckCircle className="w-4 h-4" />
+                      Valider
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ))}
