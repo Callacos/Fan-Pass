@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from "react";
 
 interface Stamp {
   id: string;
@@ -17,6 +17,7 @@ interface PassportPageProps {
   onPrevious?: () => void;
   onNext?: () => void;
   isCurrentPage?: boolean;
+  // Suppression des props de navigation
 }
 
 const PassportPage: React.FC<PassportPageProps> = ({
@@ -26,179 +27,247 @@ const PassportPage: React.FC<PassportPageProps> = ({
   onStampClick,
   onPrevious,
   onNext,
-  isCurrentPage = false
+  isCurrentPage = false,
+  // Suppression des props de navigation
 }) => {
-  const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
-
-  const stampTemplates = [
-    {
-      country: 'FRANCE',
-      type: 'ENTRÉE',
-      image: '/stamps/france.png'
-    },
-    {
-      country: 'ESPAGNE',
-      type: 'SORTIE',
-      image: '/stamps/spain.png'
-    },
-    {
-      country: 'ITALIE',
-      type: 'TRANSIT',
-      image: '/stamps/italy.png'
-    },
-    {
-      country: 'ALLEMAGNE',
-      type: 'ENTRÉE',
-      image: '/stamps/germany.png'
-    },
-    {
-      country: 'SUISSE',
-      type: 'VISITE',
-      image: '/stamps/switzerland.png'
-    },
-    {
-      country: 'PORTUGAL',
-      type: 'ENTRÉE',
-      image: '/stamps/portugal.png'
-    }
-  ];
-
-  const handleSlotClick = (slotIndex: number, event: React.MouseEvent) => {
-    // Empêcher la propagation de l'événement pour éviter de déclencher la navigation
-    event.stopPropagation();
-    
-    // Si le tampon existe, ouvrir le popup
-    if (stamps[slotIndex]) {
-      onStampClick?.(stamps[slotIndex]);
-      return;
-    }
-
-    const randomStamp = stampTemplates[Math.floor(Math.random() * stampTemplates.length)];
-    const newStamp: Stamp = {
-      id: `stamp-${Date.now()}-${slotIndex}`,
-      country: randomStamp.country,
-      date: new Date().toLocaleDateString('fr-FR'),
-      type: randomStamp.type,
-      image: randomStamp.image
-    };
-
-    onAddStamp(slotIndex, newStamp);
-    setSelectedSlot(slotIndex);
-    setTimeout(() => setSelectedSlot(null), 1000);
-  };
-
+  // --- HEADER ---
   return (
-    <div className="bg-gradient-to-b from-black to-white w-[420px] h-[540px] rounded-lg shadow-xl border border-gray-300 relative overflow-hidden">
+    <div
+      className="passport-museum-container"
+      style={{
+        position: "relative",
+        width: 440,
+        height: 600,
+        borderRadius: 24,
+        overflow: "hidden",
+        boxShadow:
+          "0 8px 32px 0 rgba(31, 38, 135, 0.37), 0 0 0 2px #ff007a55, 0 0 40px 0 #ff007a22",
+        background:
+          "linear-gradient(135deg, rgba(24,18,34,0.7) 0%, rgba(36,20,50,0.8) 60%, rgba(255,0,122,0.10) 100%)",
+        backdropFilter: "blur(16px)",
+        border: "1.5px solid rgba(255,255,255,0.13)",
+      }}
+    >
+      {/* Effet holo + reflets */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
+          background:
+            "radial-gradient(circle at 80% 10%, rgba(255,0,60,0.10) 0%, transparent 60%), " +
+            "radial-gradient(circle at 20% 90%, rgba(0,255,255,0.08) 0%, transparent 60%), " +
+            "linear-gradient(120deg, rgba(255,255,255,0.07) 0%, transparent 60%)",
+        }}
+      />
+      {/* Navigation flèches */}
       {isCurrentPage && onPrevious && (
         <div
           className="page-click-zone left"
           onClick={onPrevious}
           title="Page précédente"
-        />
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            height: "100%",
+            width: 40,
+            zIndex: 10,
+            cursor: "pointer",
+          }}
+        >
+          <span style={{ fontSize: 32, color: "#ff007a88" }}>&#8592;</span>
+        </div>
       )}
-
       {isCurrentPage && onNext && (
         <div
           className="page-click-zone right"
           onClick={onNext}
           title="Page suivante"
-        />
+          style={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            height: "100%",
+            width: 40,
+            zIndex: 10,
+            cursor: "pointer",
+          }}
+        >
+          <span style={{ fontSize: 32, color: "#ff007a88" }}>&#8594;</span>
+        </div>
       )}
-
       {/* Logo Chiliz au centre en haut */}
-      <div className="absolute top-3 left-1/2 transform -translate-x-1/2">
-        <img 
-          src="/pims.png" 
-          alt="Logo Chiliz" 
-          className="w-16 h-16 object-contain"
+      <div
+        style={{
+          position: "absolute",
+          top: 18,
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 5,
+          width: 56,
+          height: 56,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <img
+          src="/pims.png"
+          alt="Logo Chiliz"
+          style={{
+            width: 48,
+            height: 48,
+            objectFit: "contain",
+            filter: "drop-shadow(0 0 12px #ff007a88)",
+          }}
         />
       </div>
-
-      <div className="p-6 h-full flex flex-col justify-center items-center pt-24">
-        {/* 3 gros ronds au centre, un en dessous de l'autre */}
-        <div className="flex flex-col items-center">
-          {[0, 1, 2].map((slotIndex) => {
-            // Décalages horizontaux pour chaque tampon
-            const getOffsetClass = (index: number) => {
-              switch (index) {
-                case 0: return '-translate-x-20'; // Premier tampon plus à gauche
-                case 1: return 'translate-x-20';  // Deuxième tampon plus à droite
-                case 2: return '-translate-x-6'; // Troisième tampon plus à gauche
-                default: return '';
-              }
-            };
-
-            // Espacement vertical personnalisé
-            const getMarginClass = (index: number) => {
-              switch (index) {
-                case 0: return '';
-                case 1: return 'mt-2';
-                case 2: return ''; // Pas de marge pour le troisième
-                default: return '';
-              }
-            };
-
-            return (
-              <div
-                key={slotIndex}
-                className={`stamp-slot-round rounded-full border-4 border-dashed border-gray-400 cursor-pointer transition-all duration-300 flex items-center justify-center relative z-10 ${getOffsetClass(slotIndex)} ${getMarginClass(slotIndex)} ${
-                  slotIndex === 1 ? 'w-44 h-44' : 'w-32 h-32'
-                } ${
-                  stamps[slotIndex] ? 'bg-white border-solid shadow-lg hover:shadow-xl hover:scale-105' : 'hover:border-red-500 hover:bg-red-50'
-                } ${selectedSlot === slotIndex ? 'animate-pulse border-red-500 scale-110' : ''}`}
-                onClick={(event) => handleSlotClick(slotIndex, event)}
-              >
-              {stamps[slotIndex] ? (
-                <div className={`relative w-full h-full transform transition-all duration-500 ${
-                  selectedSlot === slotIndex ? 'scale-110' : 'scale-100'
-                }`}>
-                  {stamps[slotIndex].image ? (
-                    <img
-                      src={stamps[slotIndex].image}
-                      alt={`Tampon ${stamps[slotIndex].country}`}
-                      className="w-full h-full object-cover rounded-full"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-white rounded-full flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-green-600 font-bold text-lg">✓</div>
-                        <div className="text-green-600 font-bold text-xs mt-1">VALIDÉ</div>
-                      </div>
-                    </div>
-                  )}
-                </div>
+      {/* Boutons Home et Quests verticaux à droite */}
+      {/* (SUPPRIMÉ: Les boutons de navigation sont maintenant gérés dans App.tsx) */}
+      {/* Section tampons 3D */}
+      <div
+        style={{
+          position: "absolute",
+          top: 120,
+          left: 0,
+          width: "100%",
+          height: 360,
+          zIndex: 3,
+          display: "block",
+        }}
+      >
+        {stamps.map((stamp, idx) => {
+          const isFilled = !!stamp.image;
+          // Positionnement asymétrique et effet Z
+          let slotStyle =
+            idx === 0
+              ? {
+                  left: 32,
+                  top: 10,
+                  transform: "scale(1.08) rotate(-8deg)",
+                  zIndex: 10,
+                }
+              : idx === 1
+              ? {
+                  right: 44,
+                  bottom: 60,
+                  transform: "scale(1.35) rotate(7deg)",
+                  zIndex: 12,
+                }
+              : {
+                  left: 120,
+                  bottom: 8,
+                  transform: "scale(1.12) rotate(-4deg)",
+                  zIndex: 9,
+                };
+          return (
+            <div
+              key={stamp.id || idx}
+              className="museum-stamp-slot"
+              style={{
+                width: idx === 1 ? 160 : 130,
+                height: idx === 1 ? 160 : 130,
+                borderRadius: "50%",
+                background: "transparent",
+                boxShadow: "none",
+                border: "none",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                position: "absolute",
+                overflow: "visible",
+                ...slotStyle,
+              }}
+              onClick={() => onStampClick && onStampClick(stamp)}
+            >
+              {isFilled ? (
+                <img
+                  src={stamp.image}
+                  alt={stamp.country}
+                  style={{
+                    width: idx === 1 ? 140 : 110,
+                    height: idx === 1 ? 140 : 110,
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    boxShadow: "0 0 0 2px #fff8",
+                    filter:
+                      "drop-shadow(0 0 18px #ff007a88) drop-shadow(0 0 24px #00fff755) drop-shadow(0 0 12px #6d28d955)",
+                    zIndex: 2,
+                    position: "relative",
+                  }}
+                />
               ) : (
-                <div className="text-center text-gray-500 w-full h-full">
-                  <div className={`rounded-full bg-white shadow-md flex items-center justify-center relative border-4 border-gray-400 w-full h-full`}>
-                    <img 
-                      src="/psg.png?v=1" 
-                      alt="Tampon PSG" 
-                      className={`object-contain opacity-80 transform rotate-45 ${
-                        slotIndex === 1 ? 'w-36 h-36' : 'w-24 h-24'
-                      }`}
-                      style={{
-                        filter: 'grayscale(100%) brightness(0.6) contrast(1.2)',
-                      }}
-                      onError={(e) => {
-                        console.error('Erreur de chargement de l\'image PSG:', e);
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
-                </div>
+                <img
+                  src="/pims.png"
+                  alt="Chiliz logo"
+                  style={{
+                    width: idx === 1 ? 54 : 40,
+                    height: idx === 1 ? 54 : 40,
+                    opacity: 0.18,
+                    filter: "drop-shadow(0 0 12px #ff007a88)",
+                  }}
+                />
               )}
             </div>
-            );
-          })}
-        </div>
-
-        {/* Numéro de page en bas à droite */}
-        <div className="absolute bottom-4 right-4 text-xs text-gray-500 font-semibold">
-          {pageNumber.toString().padStart(2, '0')}
-        </div>
+          );
+        })}
+      </div>
+      {/* Numéro de page en bas à droite */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 18,
+          right: 28,
+          fontFamily: "Orbitron, sans-serif",
+          fontWeight: 700,
+          fontSize: 18,
+          color: "#fff",
+          opacity: 0.7,
+          letterSpacing: 1,
+          textShadow: "0 0 8px #ff007a55",
+          zIndex: 10,
+        }}
+      >
+        {pageNumber.toString().padStart(2, "0")}
       </div>
     </div>
   );
 };
 
 export default PassportPage;
+
+/* Ajout des animations CSS globales */
+<style>{`
+@keyframes badgePop {
+  0% { transform: scale(0.2) rotate(-30deg); opacity: 0; }
+  60% { transform: scale(1.15) rotate(8deg); opacity: 1; }
+  80% { transform: scale(0.95) rotate(-4deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+@keyframes badgeHaloSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes badgeNeonBorder {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+@keyframes badgeAppear {
+  0% { transform: scale(0.2) rotate(-30deg); opacity: 0; }
+  60% { transform: scale(1.15) rotate(8deg); opacity: 1; }
+  80% { transform: scale(0.95) rotate(-4deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+@keyframes badgeGlowPulse {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.38; }
+}
+@keyframes badgeEmptyNeon {
+  0% { box-shadow: 0 0 16px #ff007a88, 0 0 32px #00fff744; }
+  50% { box-shadow: 0 0 32px #ff007a88, 0 0 48px #00fff744; }
+  100% { box-shadow: 0 0 16px #ff007a88, 0 0 32px #00fff744; }
+}
+`}</style>;
