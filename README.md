@@ -1,16 +1,14 @@
+# 🏟️ FanPass App
 
+A visually stunning, Sport-themed NFT passport and quest application built with React, Ethers.js, and Tailwind CSS. Collect digital stamps by completing quests, mint exclusive NFTs, and access a themed store—all in a modern, immersive interface.
 
 ---
-> ⚠️ **DISCLAIMER**
+> ⚠️ **Your attention please :)**
 >
 > - The NFT minting function is currently **ownerOnly**: only the contract owner can mint new NFTs. Regular users cannot mint unless the contract is redeployed with public minting enabled.
 > - We did not have time to redeploy the modified contract for public minting.
 > - However, the passport will display all NFTs present in your MetaMask wallet, so you can still see your collection if you own compatible NFTs.
 ---
-
-# 🏟️ FanPass App
-
-A visually stunning, Sport-themed NFT passport and quest application built with React, Ethers.js, and Tailwind CSS. Collect digital stamps by completing quests, mint exclusive NFTs, and access a themed store—all in a modern, immersive interface.
 
 
 ## ✨ Features
