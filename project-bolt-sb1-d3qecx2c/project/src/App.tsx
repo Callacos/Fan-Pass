@@ -77,7 +77,7 @@ function App() {
     }
   }, [currentPage, isPassportOpen]);
 
-    // Gère le clic sur un tampon pour afficher ses détails
+  // Gère le clic sur un tampon pour afficher ses détails
   const handleStampClick = (stamp: Stamp) => {
     setSelectedStamp(stamp);
     setShowStampDetailsPopup(true);
@@ -239,15 +239,15 @@ function App() {
 
   // Gérer la classe du body pour empêcher le scroll sur la page passeport
   useEffect(() => {
-    if (view === 'passport') {
-      document.body.classList.add('passport-view-body');
+    if (view === "passport") {
+      document.body.classList.add("passport-view-body");
     } else {
-      document.body.classList.remove('passport-view-body');
+      document.body.classList.remove("passport-view-body");
     }
-    
+
     // Nettoyer la classe quand le composant est démonté
     return () => {
-      document.body.classList.remove('passport-view-body');
+      document.body.classList.remove("passport-view-body");
     };
   }, [view]);
 
@@ -290,7 +290,7 @@ function App() {
     }
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-8">
-        <Challenges 
+        <Challenges
           onBackToMenu={handleBackToMenuFromQuests}
           onOpenCollection={handleOpenPassport}
         />
@@ -334,16 +334,48 @@ function App() {
     return (
       <div className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden">
         <ParticlesBackground />
-        {/* Boutons Menu et Quests en haut à droite */}
-        <div style={{ position: 'absolute', top: 32, right: 32, zIndex: 20, display: 'flex', gap: '16px' }}>
-          <button onClick={handleBackToMenu} className="menu-button">
-            Menu
+        {/* Boutons d'action en haut à gauche */}
+        <div
+          style={{
+            position: "absolute",
+            top: 32,
+            left: 32,
+            zIndex: 40,
+            display: "flex",
+            flexDirection: "row",
+            gap: "18px",
+            alignItems: "center",
+          }}
+        >
+          <button
+            onClick={handleBackToMenu}
+            className="cyber-action-button primary"
+            style={{
+              minWidth: 110,
+              padding: "0.5rem 1.2rem",
+              fontSize: "0.95rem",
+            }}
+          >
+            <span className="button-text">HOME</span>
+            <div className="button-glow"></div>
+            <div className="button-border"></div>
           </button>
-          <button onClick={handleOpenQuests} className="menu-button">
-            Quests
+          <button
+            onClick={handleOpenQuests}
+            className="cyber-action-button secondary"
+            style={{
+              minWidth: 110,
+              padding: "0.5rem 1.2rem",
+              fontSize: "0.95rem",
+            }}
+          >
+            <span className="button-text">QUESTS</span>
+            <div className="button-glow"></div>
+            <div className="button-border"></div>
           </button>
         </div>
-
+        {/* Gros espace entre les boutons et les pages */}
+        <div style={{ height: 64 }} />
         <div className="flex flex-col items-center">
           <div className="relative perspective-1000">
             <div className="coverflow-container">
@@ -367,15 +399,7 @@ function App() {
                       onNext={handleNextPage}
                       isCurrentPage={pageIndex === currentPage}
                     />
-                    <div className="page-reflection">
-                      <PassportPage
-                        pageNumber={pageIndex + 1}
-                        stamps={generateStampsForPage(pageIndex + 1)}
-                        onAddStamp={() => {}}
-                        onStampClick={() => {}}
-                        isCurrentPage={false}
-                      />
-                    </div>
+                    {/* Suppression du reflet miroir ici */}
                   </div>
                 </div>
               ))}
@@ -436,7 +460,6 @@ function App() {
 
           {/* Bouton de connexion futuriste */}
           <div className="cyber-button-container">
-
             <button
               onClick={handleMetaMaskConnect}
               className="cyber-connect-button"
@@ -551,7 +574,6 @@ function App() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
