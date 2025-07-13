@@ -6,6 +6,7 @@ import PhotoUpload from "./components/PhotoUpload";
 import StampPopup from "./components/StampPopup";
 import StampDetailsPopup from "./components/StampDetailsPopup";
 import ParticlesBackground from "./components/background";
+import Store from "./components/Store";
 import { usePassportAnimation } from "./hooks/usePassportAnimation";
 import { useQuests } from "./hooks/useQuests";
 import { useWeb3 } from "./hooks/useWeb3";
@@ -36,9 +37,13 @@ interface Quest {
 }
 
 function App() {
-  const [view, setView] = useState<"menu" | "passport" | "upload" | "quests">(
+  const [view, setView] = useState<"menu" | "passport" | "upload" | "quests" | "store">(
     "menu"
   );
+  // Handler pour ouvrir le store
+  const handleOpenStore = () => {
+    setView("store");
+  };
   const [isPassportOpen, setIsPassportOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
@@ -252,6 +257,30 @@ function App() {
   }, [view]);
 
   // Rendu conditionnel basé sur la vue actuelle
+  if (view === "store") {
+    return (
+      <Store
+        fanTokens={fanTokens}
+        onBuy={(nftKey) => {
+          // Décrémenter les fan tokens (exemple)
+          const nft = [
+            { key: "ultra1", price: 5 },
+            { key: "ultra2", price: 8 },
+          ].find((n) => n.key === nftKey);
+          if (nft && fanTokens >= nft.price) {
+            setFanTokens((ft) => ft - nft.price);
+            alert(`Félicitations ! Vous avez acheté ${nftKey}`);
+          } else {
+            alert("Pas assez de Fan Tokens");
+          }
+        }}
+        onGoPassport={handleOpenPassport}
+        onGoQuests={handleOpenQuests}
+        onGoHome={handleBackToMenu}
+      />
+    );
+  }
+
   if (view === "upload" && selectedQuest) {
     return (
       <div className="app-orbitron">
@@ -542,6 +571,14 @@ function App() {
                 className="cyber-action-button secondary w-64"
               >
                 <span className="button-text">SEE THE QUESTS</span>
+                <div className="button-glow"></div>
+                <div className="button-border"></div>
+              </button>
+              <button
+                onClick={handleOpenStore}
+                className="cyber-action-button w-64"
+              >
+                <span className="button-text">STORE</span>
                 <div className="button-glow"></div>
                 <div className="button-border"></div>
               </button>
