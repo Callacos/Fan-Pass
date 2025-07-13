@@ -63,19 +63,6 @@ yarn dev
 `http://localhost:5173` in your browser.
 
 
-### 🗂️ Project Structure
-
-```
-fan-pass/
-  fanpass/
-    src/
-      components/
-      hooks/
-      image/
-      ...
-```
-
-
 ### 🎨 Customization
 
 - **Theme**: Easily adjust colors and gradients in Tailwind config or component classes.
