@@ -4,6 +4,7 @@ import PassportPage from "./components/PassportPage";
 import Challenges from "./components/challenges";
 import PhotoUpload from "./components/PhotoUpload";
 import StampPopup from "./components/StampPopup";
+import StampDetailsPopup from "./components/StampDetailsPopup";
 import ParticlesBackground from "./components/background";
 import { usePassportAnimation } from "./hooks/usePassportAnimation";
 import { useQuests } from "./hooks/useQuests";
@@ -75,6 +76,12 @@ function App() {
       checkForNewStampsOnCurrentPage();
     }
   }, [currentPage, isPassportOpen]);
+
+    // Gère le clic sur un tampon pour afficher ses détails
+  const handleStampClick = (stamp: Stamp) => {
+    setSelectedStamp(stamp);
+    setShowStampDetailsPopup(true);
+  };
 
   const handleOpenPassport = () => {
     setView("passport");
@@ -325,10 +332,17 @@ function App() {
     }
     // Si connecté, afficher les pages du passeport
     return (
-      <div className="min-h-screen flex items-center justify-center p-8">
-        <button onClick={handleBackToMenu} className="menu-button">
-          Menu
-        </button>
+      <div className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden">
+        <ParticlesBackground />
+        {/* Boutons Menu et Quests en haut à droite */}
+        <div style={{ position: 'absolute', top: 32, right: 32, zIndex: 20, display: 'flex', gap: '16px' }}>
+          <button onClick={handleBackToMenu} className="menu-button">
+            Menu
+          </button>
+          <button onClick={handleOpenQuests} className="menu-button">
+            Quests
+          </button>
+        </div>
 
         <div className="flex flex-col items-center">
           <div className="relative perspective-1000">
