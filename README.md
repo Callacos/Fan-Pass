@@ -63,16 +63,88 @@ yarn dev
 `http://localhost:5173` in your browser.
 
 
+
 ### 🗂️ Project Structure
 
 ```
-fan-pass/
-  fanpass/
-    src/
-      components/
-      hooks/
-      image/
-      ...
+Chilini/
+  bronze.json
+  carte_postale.json
+  compulsive_buyer.json
+  first_match.json
+  tenth_match.json
+  welcome.json
+  Chilini/
+    challengesFront.tsx
+    README.md
+    chiliz/
+      package.json
+      src/
+        walletConnector/
+          Web3Manager.js
+  project-bolt-sb1-d3qecx2c/
+    project/
+      eslint.config.js
+      index.html
+      package.json
+      postcss.config.js
+      tailwind.config.js
+      tsconfig.app.json
+      tsconfig.json
+      tsconfig.node.json
+      vite.config.ts
+      public/
+        block-stamp.svg
+        block.png
+        pims.png
+        psg.png
+        quests.json
+        stamps/
+          france.png
+      src/
+        App_backup.tsx
+        App.tsx
+        index.css
+        index.css.backup
+        main.tsx
+        vite-env.d.ts
+        components/
+          background.tsx
+          challenges.tsx
+          PassportCover.tsx
+          PassportNavigation.tsx
+          PassportPage.tsx
+          PassportVachette.tsx
+          PhotoUpload.tsx
+          QuestList.tsx
+          ShinyText.css
+          ShinyText.tsx
+          StampPopup.tsx
+        hooks/
+          usePassportAnimation.ts
+          useQuests.ts
+          useWeb3.ts
+        image/
+          meta.png
+          passe.png
+          pims.png
+          psg.png
+          vachette.png
+  chiliz-passport-contract/
+    hardhat.config.js
+    package.json
+    README.md
+    artifacts/
+    cache/
+    contracts/
+      PsgPassportNFT.sol
+    scripts/
+      deploy.js
+      mint-nft.js
+    test/
+      PsgPassportNFT.js
+  front-end/
+    index.html
 ```
 
 
