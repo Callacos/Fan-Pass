@@ -704,12 +704,19 @@ export function useWeb3() {
       const tokenURI = await _nftContract.tokenURI(tokenId);
       const httpMetadataUrl = convertIpfsToHttp(tokenURI);
       const response = await fetch(httpMetadataUrl);
-      const metadata = await response.json();
-      nftList.push({
-        tokenId: tokenId.toString(),
-        ...metadata,
-        image: convertIpfsToHttp(metadata.image),
-      });
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const metadata = await response.json();
+        nftList.push({
+          tokenId: tokenId.toString(),
+          ...metadata,
+          image: convertIpfsToHttp(metadata.image),
+        });
+      } else {
+        // Log et skip si ce n'est pas du JSON
+        console.warn(`Le tokenURI ne pointe pas vers un JSON valide : ${httpMetadataUrl} (content-type: ${contentType})`);
+        continue;
+      }
     }
     setNfts(nftList);
   }, [_nftContract, _userAddress]);
