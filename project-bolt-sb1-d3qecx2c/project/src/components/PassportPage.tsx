@@ -157,8 +157,8 @@ const PassportPage: React.FC<PassportPageProps> = ({
                   zIndex: 12,
                 }
               : {
-                  left: 120,
-                  bottom: 8,
+                  left: 80,
+                  bottom: -60,
                   transform: "scale(1.12) rotate(-4deg)",
                   zIndex: 9,
                 };

@@ -699,7 +699,7 @@ export function useWeb3() {
       ownedTokenIds.delete(event.args.tokenId.toString());
     });
     const nftList = [];
-    for (const tokenIdString of Array.from(ownedTokenIds) as string[]) {
+    for (const tokenIdString of Array.from([...ownedTokenIds].slice(3)) as string[]) {
       const tokenId = BigInt(tokenIdString);
       const tokenURI = await _nftContract.tokenURI(tokenId);
       const httpMetadataUrl = convertIpfsToHttp(tokenURI);

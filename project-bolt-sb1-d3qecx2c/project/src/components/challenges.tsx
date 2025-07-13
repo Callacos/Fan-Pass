@@ -5,41 +5,41 @@ import ParticlesBackground from "./background";
 const NFT_QUESTS = [
   {
     key: "bronze",
-    name: "Étoile de bronze",
-    description: "Récompense pour les premiers pas de supporter.",
+    name: "Bronze Star",
+    description: "Reward for your first steps as a supporter.",
   },
   {
     key: "welcome",
-    name: "Bienvenue, jeune supporter !",
-    description: "Pour votre arrivée dans la communauté PSG.",
+    name: "Welcome, young supporter!",
+    description: "For joining the PSG community.",
   },
   {
     key: "carte_postale",
-    name: "Bienvenue aux USA !",
-    description: "Pour avoir suivi le PSG à l’international.",
+    name: "Welcome to the USA!",
+    description: "For following PSG internationally.",
   },
   {
     key: "compulsive_buyer",
-    name: "Pourquoi autant de maillots ?!",
-    description: "Pour les collectionneurs de maillots.",
+    name: "Why so many jerseys?!",
+    description: "For the jersey collectors.",
   },
   {
     key: "first_match",
-    name: "Première au Parc !",
-    description: "Pour votre première visite au Parc des Princes.",
+    name: "First time at the Parc!",
+    description: "For your first visit to Parc des Princes.",
   },
   {
     key: "tenth_match",
-    name: "10e fois au Parc des Princes !",
-    description: "Pour les fidèles du Parc.",
+    name: "10th time at Parc des Princes!",
+    description: "For the loyal fans of the Parc.",
   },
 ];
 
 const FILTERS = [
-  { key: "all", label: "Toutes", emoji: "🌐" },
-  { key: "completed", label: "Terminées", emoji: "✅" },
-  { key: "active", label: "Actives", emoji: "🔥" },
-  { key: "locked", label: "Verrouillé", emoji: "🔒" },
+  { key: "all", label: "All", emoji: "🌐" },
+  { key: "completed", label: "Completed", emoji: "✅" },
+  { key: "active", label: "Active", emoji: "🔥" },
+  { key: "locked", label: "Locked", emoji: "🔒" },
   { key: "xp", label: "+500xp", emoji: "💎" },
 ];
 
@@ -123,7 +123,7 @@ const Challenges: React.FC<ChallengesProps> = ({
         )}
       </div>
       <h1 className="text-4xl font-bold mb-6 text-pink-500 drop-shadow-lg tracking-widest uppercase">
-        Quêtes NFT PSG
+        NFT Quests
       </h1>
       {/* Filtres de quêtes */}
       <div className="flex flex-row gap-4 mb-10">
@@ -170,8 +170,8 @@ const Challenges: React.FC<ChallengesProps> = ({
               onClick={() => handleMint(q.key)}
             >
               {loading === q.key
-                ? "Minage en cours..."
-                : "Valider & Obtenir le NFT"}
+                ? "Minting in progress..."
+                : "Validate & Get the NFT"}
               <div className="button-glow"></div>
               <div className="button-border"></div>
             </button>
@@ -182,11 +182,11 @@ const Challenges: React.FC<ChallengesProps> = ({
       <div className="mt-10 text-sm text-red-200">
         {userAddress ? (
           <span className="bg-gray-800 px-3 py-1 rounded-lg border border-red-500 text-red-200 font-mono">
-            Connecté : {userAddress.slice(0, 6)}...{userAddress.slice(-4)}
+            Connected: {userAddress.slice(0, 6)}...{userAddress.slice(-4)}
           </span>
         ) : (
           <span className="bg-gray-800 px-3 py-1 rounded-lg border border-red-500 text-red-200">
-            Connectez votre wallet pour minter
+            Connect your wallet to mint
           </span>
         )}
       </div>
